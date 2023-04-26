@@ -1,7 +1,7 @@
 import "../App.css";
 import "../bootstrap.css";
 import logo from '../images/logo.png';
-//import { Identity } from "@semaphore-protocol/identity"
+import { Identity } from "@semaphore-protocol/identity"
 import ListGroup from 'react-bootstrap/ListGroup';
 
 
@@ -9,9 +9,9 @@ import ListGroup from 'react-bootstrap/ListGroup';
 function SecondPage() {
   const onSubmit = () => {
     //TODO: Add semaphore identity creation
-    //const { trapdoor, nullifier, commitment } = new Identity()
+    const { trapdoor, nullifier, commitment } = new Identity()
 
-    alert("clicked") 
+    alert("New identity: " + trapdoor); 
   } 
     return (
         <div>
