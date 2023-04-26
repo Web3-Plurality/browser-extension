@@ -1,0 +1,42 @@
+.App {
+  color: black;
+  text-align: center;
+}
+
+.container {
+  width: 20rem;
+  height: 30rem;
+  background-color: white;
+}
+
+.logo-div {
+  display: flex;
+  height: 100vh;
+  width: 100vw; 
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+
+.center {
+  margin:0 auto;
+  display:block;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.bg-image-vertical {
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 100%;
+  }
+  
+  @media (min-width: 1025px) {
+  .h-custom-2 {
+  height: 100%;
+  }
+  }
