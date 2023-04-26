@@ -5,29 +5,39 @@ import "../bootstrap.css";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
-const TEXTS = ["Plural Identity","Plurality" ];
-
+import { useSpring, animated } from '@react-spring/web';
 
 import logo from '../images/logo.png';
 
 function LogoPage() {
     const navigate = useNavigate();
-
+    const styles = useSpring({
+      from: {
+        opacity: 0
+      },
+      to: {
+        opacity: 1
+      },
+      config: {
+        duration: 2000
+    }
+    })
     useEffect(() => {
         setTimeout(() => {
           navigate('/home')
-        }, 1000)
+        }, 2000)
       }, [])
 
   return (
   <Container className="text-center" style={{position:'absolute', top: '40%'}}>
+        <animated.div style={styles} >
     <Row className="justify-content-md-center">
       <Col><img src={logo} alt={"None"} style={{width: '50px', height: '60px' }} /></Col>
     </Row>
     <Row className="justify-content-md-center">
-      <Col className='display-3 fade-in'>Plurality</Col>
+      <Col className='display-3'>Plurality</Col>
     </Row>
+    </animated.div>
   </Container>
   );
   }
