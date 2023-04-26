@@ -1,9 +1,9 @@
+import { ListGroup } from "react-bootstrap";
 import "../App.css";
 import "../bootstrap.css";
 import logo from '../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity"
-import ListGroup from 'react-bootstrap/ListGroup';
-import React, { useState } from "react";
+import { useState } from "react";
 
 
 
@@ -13,11 +13,11 @@ function SecondPage() {
   ];
   
   const ListItem = ({ trapdoor , nullifier, commitment, id, onRemoveClick, onClick }: { trapdoor:string , nullifier:string, commitment: string, id:number, onRemoveClick:any, onClick: any }) => (
-    <div onClick={() => onClick(id)}>
-      {commitment.toString()}
+    <div className="list-group-item">
       <span> </span>
-      <button onClick={() => onRemoveClick(id)}>x</button>
-
+      <p onClick={() => onClick(id)} > Identity {id} 
+        {/*<button style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF', alignSelf: 'right'}} onClick={() => onRemoveClick(id)}>x</button>*/}
+      </p>
     </div>
   );
   
@@ -33,12 +33,14 @@ function SecondPage() {
       updateList(newList);
     };
     const removeItem = (id:number) => {
+      //TODO: Do thorough testing before using this
       updateList(list.filter(item => item.id !== id));
     };
 
     const displayItem = (id:number) => {
       const item = list.filter(item => item.id == id);
-      alert (id + JSON.stringify(item));
+      //TODO: Create a new page for showing details of an identity
+      alert (JSON.stringify(item));
     }
   
     return (
@@ -49,9 +51,11 @@ function SecondPage() {
       </span>
       <div className="col-12">
           <button className="btn btn-info btn-lg btn-block center" type="button" onClick={addItem} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>+ Add New Identity</button>
+      <ListGroup>
       {list.map(item => (
-        <ListItem class="list-group-item" key={item.id} {...item} onRemoveClick={removeItem} onClick={displayItem} />
+        <ListItem className="list-group-item" key={item.id} {...item} onRemoveClick={removeItem} onClick={displayItem} />
       ))}
+      </ListGroup>
       </div>
     </div>
     );
