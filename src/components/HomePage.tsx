@@ -2,13 +2,26 @@ import "../App.css";
 import "../bootstrap.css";
 import logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom"
+import { useState } from 'react'
+
 
 function HomePage() {
   const navigate = useNavigate()
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleUsernameChange = (event: any) => {
+    setUsername(event.target.value);
+  };
+  const handlePasswordChange = (event: any) => {
+    setPassword(event.target.value);
+  };
 
   const onSubmit = () => {
-    //TODO: Add fields checking 
-    navigate('/second');
+    if (username === 'admin' && password === 'admin')
+      navigate('/second');
+    else
+      alert("Invalid username or password")
   } 
   return (
     <div>
@@ -28,11 +41,11 @@ function HomePage() {
             <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing: '1px'}}>Log in</h3>
 
             <div className="form-outline mb-4">
-              <input type="email" id="form2Example18" className="form-control form-control-lg" placeholder="Email address" />
+              <input type="email" id="form2Example18" className="form-control form-control-lg" placeholder="username" onChange={handleUsernameChange} />
             </div>
 
             <div className="form-outline mb-4">
-              <input type="password" id="form2Example28" className="form-control form-control-lg" placeholder='Password' />
+              <input type="password" id="form2Example28" className="form-control form-control-lg" placeholder='password' onChange={handlePasswordChange}/>
             </div>
 
             <div className="form-outline pt-1 mb-4">

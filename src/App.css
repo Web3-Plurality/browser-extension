@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.fade-in {
+  transition: opacity 1s ease;
+}
+
 .container {
   width: 20rem;
   height: 30rem;

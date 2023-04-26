@@ -3,38 +3,58 @@ import "../bootstrap.css";
 import logo from '../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity"
 import ListGroup from 'react-bootstrap/ListGroup';
+import React, { useState } from "react";
 
 
 
 function SecondPage() {
-  const onSubmit = () => {
-    //TODO: Add semaphore identity creation
-    const { trapdoor, nullifier, commitment } = new Identity()
+  const initialData: any[] | (() => any[]) = [
+    //{ id: 0, trapdoor: "trapdoor", nullifier: "nullifier", commitment: "commitment" },
+  ];
+  
+  const ListItem = ({ trapdoor , nullifier, commitment, id, onRemoveClick, onClick }: { trapdoor:string , nullifier:string, commitment: string, id:number, onRemoveClick:any, onClick: any }) => (
+    <div onClick={() => onClick(id)}>
+      {commitment.toString()}
+      <span> </span>
+      <button onClick={() => onRemoveClick(id)}>x</button>
 
-    alert("New identity: " + trapdoor); 
-  } 
+    </div>
+  );
+  
+    const [list, updateList] = useState(initialData);
+  
+    const addItem = () => {
+      const { trapdoor, nullifier, commitment } = new Identity()
+
+      const newList = [
+        ...list,
+        { id: list.length, trapdoor: trapdoor.toString(), nullifier: nullifier.toString(), commitment: commitment.toString() }
+      ];
+      updateList(newList);
+    };
+    const removeItem = (id:number) => {
+      updateList(list.filter(item => item.id !== id));
+    };
+
+    const displayItem = (id:number) => {
+      const item = list.filter(item => item.id == id);
+      alert (id + JSON.stringify(item));
+    }
+  
     return (
-        <div>
-          {/*<header className="App-header">
-            <p>View History</p>
-            <Link to="/">go back</Link>
-          </header>*/}
-              <span className="h1 fw-bold mb-0 center">
-                <img src={logo} alt={"Login image"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
-                  Plurality
-              </span>
-          <div className="col-12">
-          <button className="btn btn-info btn-lg btn-block center" type="button" onClick={onSubmit} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>+ Add New Identity</button>
-          <ListGroup as="ul">
-            <ListGroup.Item as="li" active>Cras justo odio</ListGroup.Item>
-            <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-            <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-            <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-            <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-          </ListGroup>
-          </div>
-        </div>
-      );
+      <div>
+      <span className="h1 fw-bold mb-0 center">
+        <img src={logo} alt={"Login image"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
+          Plurality
+      </span>
+      <div className="col-12">
+          <button className="btn btn-info btn-lg btn-block center" type="button" onClick={addItem} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>+ Add New Identity</button>
+      {list.map(item => (
+        <ListItem class="list-group-item" key={item.id} {...item} onRemoveClick={removeItem} onClick={displayItem} />
+      ))}
+      </div>
+    </div>
+    );
   }
   
   export default SecondPage;
