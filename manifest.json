@@ -17,5 +17,8 @@
         "activeTab",
         "storage",
         "scripting"
-        ]
+        ],
+        "externally_connectable" : {
+          "matches": ["<all_urls>" ]
+        }
 }
