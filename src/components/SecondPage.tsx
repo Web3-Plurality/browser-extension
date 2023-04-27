@@ -4,10 +4,13 @@ import "../bootstrap.css";
 import logo from '../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity"
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom"
+import { sendIdentityCommitment } from "../contentScript/contentScript";
 
 
 function SecondPage() {
+  const navigate = useNavigate()
+
   const initialData: any[] | (() => any[]) = [
     //{ id: 0, trapdoor: "trapdoor", nullifier: "nullifier", commitment: "commitment" },
   ];
@@ -39,8 +42,7 @@ function SecondPage() {
 
     const displayItem = (id:number) => {
       const item = list.filter(item => item.id == id);
-      //TODO: Create a new page for showing details of an identity
-      alert (JSON.stringify(item));
+      sendIdentityCommitment(JSON.stringify(item[0].commitment));
     }
   
     return (

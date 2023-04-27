@@ -4,7 +4,8 @@ const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
     entry: {
-        index: "./src/index.tsx"
+        index: path.resolve("./src/index.tsx"),
+        contentScript: path.resolve("./src/contentScript/contentScript.ts")
     },
     mode: "production",
     module: {
@@ -53,11 +54,7 @@ module.exports = {
         extensions: [".tsx", ".ts", ".js"],
         alias: {
             '@': path.resolve('resources/js'),
-        },
-        fallback: {
-            crypto: require.resolve('crypto-browserify'),
-            stream: require.resolve('stream'),
-        },
+        }
     },
     output: {
         path: path.join(__dirname, "dist/js"),
