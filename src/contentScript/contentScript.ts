@@ -11,7 +11,7 @@ export const sendIdentityCommitment = (identityCommitment: string) => {
 chrome.runtime.onMessage.addListener(function(msg: {action: string, commitment: string}, sender, sendResponse) {
 
     if (msg.action == 'receive_active_identity') {
-      alert("Message recieved!: "+msg.commitment);
+      console.log("Message recieved!: "+msg.commitment);
       localStorage.setItem("commitment",msg.commitment);
     }
   });

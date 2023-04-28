@@ -8,15 +8,16 @@ import { useNavigate } from "react-router-dom"
 import { sendIdentityCommitment } from "../contentScript/contentScript";
 
 
-function SecondPage() {
+function IdentityListPage() {
   const navigate = useNavigate()
+  const [activeId, setActiveId] = useState(0);
 
   const initialData: any[] | (() => any[]) = [
     //{ id: 0, trapdoor: "trapdoor", nullifier: "nullifier", commitment: "commitment" },
   ];
-  
+
   const ListItem = ({ trapdoor , nullifier, commitment, id, onRemoveClick, onClick }: { trapdoor:string , nullifier:string, commitment: string, id:number, onRemoveClick:any, onClick: any }) => (
-    <div className="list-group-item">
+    <div className={activeId==id ? "active list-group-item" : "list-group-item" }>
       <span> </span>
       <p onClick={() => onClick(id)} > Identity {id} 
         {/*<button style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF', alignSelf: 'right'}} onClick={() => onRemoveClick(id)}>x</button>*/}
@@ -31,7 +32,7 @@ function SecondPage() {
 
       const newList = [
         ...list,
-        { id: list.length, trapdoor: trapdoor.toString(), nullifier: nullifier.toString(), commitment: commitment.toString() }
+        { id: list.length, trapdoor: trapdoor.toString(), nullifier: nullifier.toString(), commitment: commitment.toString(), isSelected: false }
       ];
       updateList(newList);
     };
@@ -42,6 +43,7 @@ function SecondPage() {
 
     const displayItem = (id:number) => {
       const item = list.filter(item => item.id == id);
+      setActiveId(id);
       sendIdentityCommitment(JSON.stringify(item[0].commitment));
     }
   
@@ -55,7 +57,7 @@ function SecondPage() {
           <button className="btn btn-info btn-lg btn-block center" type="button" onClick={addItem} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>+ Add New Identity</button>
       <ListGroup>
       {list.map(item => (
-        <ListItem className="list-group-item" key={item.id} {...item} onRemoveClick={removeItem} onClick={displayItem} />
+        <ListItem className="list-group-item"  key={item.id} {...item} onRemoveClick={removeItem} onClick={displayItem}/>
       ))}
       </ListGroup>
       </div>
@@ -63,4 +65,4 @@ function SecondPage() {
     );
   }
   
-  export default SecondPage;
+  export default IdentityListPage;

@@ -19,7 +19,7 @@ function HomePage() {
 
   const onSubmit = () => {
     if (username === 'admin' && password === 'admin')
-      navigate('/second');
+      navigate('/identitylist');
     else
       alert("Invalid username or password")
   } 

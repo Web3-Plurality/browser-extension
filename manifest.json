@@ -4,6 +4,7 @@
     "name": "Plurality",
     "description": "Identity extension with semaphore",
     "action": {
+        "default_icon": "js/127ee92124480ac4a322c0ac6328d1e5.png",
         "default_popup": "js/index.html",
         "default_title": "Plurality"
     },

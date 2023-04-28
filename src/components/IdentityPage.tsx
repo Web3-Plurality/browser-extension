@@ -19,7 +19,7 @@ function IdentityPage() {
   return (
   <div>
     <header>
-    <Link to={"/second"}>hello</Link>
+    <Link to={"/identitylist"}>hello</Link>
     </header>
   </div>
   );
