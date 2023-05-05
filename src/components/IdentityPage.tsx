@@ -20,9 +20,15 @@ function IdentityPage() {
     alert("No pressed")
   };
   const submitYes = () => {
-    alert("Yes pressed")
     const { trapdoor, nullifier, commitment } = new Identity()
     alert ("Commitment: "+commitment + "\nTrapdoor: "+trapdoor+"\nNullifier"+nullifier);
+
+    var identities = JSON.parse(localStorage.getItem("identities") || "[]");
+    var identity = {name:proofRequest, commitment: commitment.toString(), trapdoor: trapdoor.toString(), nullifier: nullifier.toString()};
+    identities.push(identity);
+    localStorage.setItem("identities", JSON.stringify(identities));
+    alert("Identity saved")
+
   };
   return (
   <div>
