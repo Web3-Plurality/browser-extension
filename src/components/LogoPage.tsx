@@ -27,7 +27,7 @@ function LogoPage() {
           const params = new URLSearchParams(window.location.search) // id=123
           let nav = "/"+params.get('nav')
           let proof_request = params.get('proof_request')
-          if (nav === '/identitylist')
+          if (nav === '/identity')
             navigate(nav+"?proof_request="+proof_request)
           else
             navigate('/home')
