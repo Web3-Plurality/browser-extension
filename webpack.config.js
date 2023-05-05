@@ -5,7 +5,9 @@ const CopyPlugin = require("copy-webpack-plugin")
 module.exports = {
     entry: {
         index: path.resolve("./src/index.tsx"),
-        contentScript: path.resolve("./src/contentScript/contentScript.ts")
+        contentScript: path.resolve("./src/contentScript/contentScript.ts"),
+        backgroundScript: path.resolve("./src/backgroundScript/backgroundScript.ts")
+
     },
     mode: "production",
     module: {
@@ -42,31 +44,28 @@ module.exports = {
             }
         ],
     },
-    plugins: [
+    output: {
+		filename: "[name].js", // the file name would be my entry"s name with a ".bundle.js" suffix
+		path: path.resolve(__dirname, "dist") // put all of the build in a dist folder
+	},
+    resolve: {
+        extensions: [".tsx", ".ts", ".js"],
+    },
+	plugins: [
         new CopyPlugin({
             patterns: [
-                { from: "manifest.json", to: "../manifest.json" },
+                { from: "manifest.json", to: "manifest.json" },
             ],
         }),
         ...getHtmlPlugins(["index"]),
-    ],
-    resolve: {
-        extensions: [".tsx", ".ts", ".js"],
-        alias: {
-            '@': path.resolve('resources/js'),
-        }
-    },
-    output: {
-        path: path.join(__dirname, "dist/js"),
-        filename: "[name].js",
-    },
-};
-
+	]
+}
 function getHtmlPlugins(chunks) {
     return chunks.map(
         (chunk) =>
             new HTMLPlugin({
-                title: "React extension",
+                inject: true,
+                title: "Plurality",
                 filename: `${chunk}.html`,
                 chunks: [chunk],
             })

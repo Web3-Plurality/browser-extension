@@ -24,7 +24,12 @@ function LogoPage() {
     })
     useEffect(() => {
         setTimeout(() => {
-          navigate('/home')
+          const params = new URLSearchParams(window.location.search) // id=123
+          let nav = "/"+params.get('nav')
+          if (nav === '/identitylist')
+            navigate(nav)
+          else
+            navigate('/home')
         }, 2000)
       }, [])
 

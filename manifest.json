@@ -4,18 +4,24 @@
     "name": "Plurality",
     "description": "Identity extension with semaphore",
     "action": {
-        "default_icon": "js/127ee92124480ac4a322c0ac6328d1e5.png",
-        "default_popup": "js/index.html",
+        "default_icon": "127ee92124480ac4a322c0ac6328d1e5.png",
+        "default_popup": "index.html",
         "default_title": "Plurality"
     },
-    "content_scripts": [
-        {
-          "matches": ["<all_urls>"],
-          "js": ["js/contentScript.js"]
-        }
-      ],
-      "permissions": [
-        "activeTab",
-        "storage"
-        ]
+    "content_scripts": [{
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    }],
+    "background": {
+      "service_worker": "backgroundScript.js"
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "permissions": [
+      "activeTab",
+      "tabs",
+      "storage",
+      "notifications"
+    ]
 }

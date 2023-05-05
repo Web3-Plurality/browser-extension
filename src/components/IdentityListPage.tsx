@@ -3,14 +3,14 @@ import "../App.css";
 import "../bootstrap.css";
 import logo from '../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import { sendIdentityCommitment } from "../contentScript/contentScript";
 
 
-function IdentityListPage() {
-  const navigate = useNavigate()
+export function IdentityListPage() {
   const [activeId, setActiveId] = useState(0);
+
 
   const initialData: any[] | (() => any[]) = [
     //{ id: 0, trapdoor: "trapdoor", nullifier: "nullifier", commitment: "commitment" },
@@ -44,9 +44,11 @@ function IdentityListPage() {
     const displayItem = (id:number) => {
       const item = list.filter(item => item.id == id);
       setActiveId(id);
+      alert ("Commitment: "+item[0].commitment + "\nTrapdoor: "+item[0].trapdoor+"\nNullifier"+item[0].nullifier);
       sendIdentityCommitment(JSON.stringify(item[0].commitment));
     }
   
+    
     return (
       <div>
       <span className="h1 fw-bold mb-0 center">
@@ -63,6 +65,6 @@ function IdentityListPage() {
       </div>
     </div>
     );
-  }
+}
   
-  export default IdentityListPage;
+export default IdentityListPage;

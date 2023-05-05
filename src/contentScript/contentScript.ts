@@ -16,3 +16,12 @@ chrome.runtime.onMessage.addListener(function(msg: {action: string, commitment: 
     }
   });
 
+
+  document.addEventListener('receive_msg_from_web_page', (event) => {
+
+    chrome.runtime.sendMessage({message: 'buttonClicked' , left: window.screenLeft + window.outerWidth,
+    top: window.screenTop},
+    function() { 
+        //alert ("In send message callback"); 
+        });
+    });
