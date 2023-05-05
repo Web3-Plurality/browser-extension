@@ -3,7 +3,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
        let data = request;
 
       chrome.windows.create({
-        url: chrome.runtime.getURL("index.html?nav=identitylist"),
+        url: chrome.runtime.getURL("index.html?nav=identitylist&proof_request="+data.proof_request),
         type: "popup",
         top: data.top,
         left: data.left-400,

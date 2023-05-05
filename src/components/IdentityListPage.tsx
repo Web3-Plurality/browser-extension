@@ -10,7 +10,12 @@ import { sendIdentityCommitment } from "../contentScript/contentScript";
 
 export function IdentityListPage() {
   const [activeId, setActiveId] = useState(0);
-
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search) // id=123
+    let proof_request = params.get('proof_request')
+    if (proof_request)
+      alert("Do you want to create a new identity for: "+proof_request +"?");
+  }, [])
 
   const initialData: any[] | (() => any[]) = [
     //{ id: 0, trapdoor: "trapdoor", nullifier: "nullifier", commitment: "commitment" },
