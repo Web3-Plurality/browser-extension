@@ -7,7 +7,8 @@ import HomePage from "./components/HomePage";
 import IdentityListPage from "./components/IdentityListPage";
 import LogoPage from "./components/LogoPage";
 import IdentityPage from "./components/IdentityPage";
-
+import StoredIdentitiesPage from "./components/StoredIdentitiesPage";
+import CreateProofPage from "./components/CreateProofPage";
 function App() {
 
   return (
@@ -16,6 +17,8 @@ function App() {
         <Route path="/home" element={<HomePage />}/>
         <Route path="/identitylist" element={<IdentityListPage />}/>
         <Route path="/identity" element={<IdentityPage />}/>
+        <Route path="/storedidentities" element={<StoredIdentitiesPage />}/>
+        <Route path="/createproof" element={<CreateProofPage />}/>
         <Route path="/" element={<LogoPage/>}/>
         <Route path="*" element={<LogoPage/>}/>
       </Routes>

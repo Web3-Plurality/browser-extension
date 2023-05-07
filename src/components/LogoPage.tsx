@@ -24,10 +24,12 @@ function LogoPage() {
     })
     useEffect(() => {
         setTimeout(() => {
-          const params = new URLSearchParams(window.location.search) // id=123
+          const params = new URLSearchParams(window.location.search) 
           let nav = "/"+params.get('nav')
           let proof_request = params.get('proof_request')
           if (nav === '/identity')
+            navigate(nav+"?proof_request="+proof_request)
+          else if (nav === '/createproof')
             navigate(nav+"?proof_request="+proof_request)
           else
             navigate('/home')
