@@ -3,24 +3,24 @@ import "./App.css";
 
 import { BrowserRouter as Router, Routes, Route }
     from "react-router-dom";
-import HomePage from "./components/HomePage";
-import IdentityListPage from "./components/IdentityListPage";
-import LogoPage from "./components/LogoPage";
-import IdentityPage from "./components/IdentityPage";
-import StoredIdentitiesPage from "./components/StoredIdentitiesPage";
-import CreateProofPage from "./components/CreateProofPage";
+import Home from "./pages/Home";
+import IdentityList from "./pages/IdentityList";
+import Splash from "./pages/Splash";
+import Identity from "./pages/Identity";
+import StoredIdentities from "./pages/StoredIdentities";
+import CreateProof from "./pages/CreateProof";
 function App() {
 
   return (
     <Router>
       <Routes>
-        <Route path="/home" element={<HomePage />}/>
-        <Route path="/identitylist" element={<IdentityListPage />}/>
-        <Route path="/identity" element={<IdentityPage />}/>
-        <Route path="/storedidentities" element={<StoredIdentitiesPage />}/>
-        <Route path="/createproof" element={<CreateProofPage />}/>
-        <Route path="/" element={<LogoPage/>}/>
-        <Route path="*" element={<LogoPage/>}/>
+        <Route path="/home" element={<Home />}/>
+        <Route path="/identitylist" element={<IdentityList />}/>
+        <Route path="/identity" element={<Identity />}/>
+        <Route path="/storedidentities" element={<StoredIdentities />}/>
+        <Route path="/createproof" element={<CreateProof />}/>
+        <Route path="/" element={<Splash/>}/>
+        <Route path="*" element={<Splash/>}/>
       </Routes>
     </Router>
   );

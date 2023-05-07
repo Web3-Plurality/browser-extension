@@ -3,7 +3,7 @@ import "../App.css";
 import "../bootstrap.css";
 import logo from '../images/logo.png';
 import { useState } from "react";
-import {generateFullProof} from "./SemaphoreUtil";
+import {generateFullProof} from "../utils/SemaphoreUtil";
 import { sendFullProof } from "../contentScript/contentScript";
 import { Group } from "@semaphore-protocol/group"
 
