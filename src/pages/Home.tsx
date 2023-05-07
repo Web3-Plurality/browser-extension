@@ -1,11 +1,11 @@
-import "../App.css";
-import "../bootstrap.css";
+import "../styles/App.css";
+import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom"
 import { useState } from 'react'
 
 
-function HomePage() {
+function Home() {
   const navigate = useNavigate()
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +19,7 @@ function HomePage() {
 
   const onSubmit = () => {
     if (username === 'admin' && password === 'admin')
-      navigate('/identitylist');
+      navigate('/addidentity');
     else
       alert("Invalid username or password")
   } 
@@ -63,9 +63,8 @@ function HomePage() {
     </div>
   </div>
   </section>
-    </div>
-    
+  </div>  
   );
 }
 
-export default HomePage;
+export default Home;

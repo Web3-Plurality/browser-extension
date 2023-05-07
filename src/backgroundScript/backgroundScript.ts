@@ -1,11 +1,8 @@
-import { tab } from "@testing-library/user-event/dist/tab";
-import { send } from "process";
-
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.message == 'identityButtonClicked') {
        let data = request;
       chrome.windows.create({
-        url: chrome.runtime.getURL("index.html?nav=identity&proof_request="+data.proof_request),
+        url: chrome.runtime.getURL("index.html?nav=requestidentitycreation&proof_request="+data.proof_request),
         type: "popup",
         top: data.top,
         left: data.left-400,

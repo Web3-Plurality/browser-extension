@@ -1,24 +1,30 @@
-import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react'
-import "../App.css";
-import "../bootstrap.css";
+import "../styles/App.css";
+import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity"
 import { useNavigate } from "react-router-dom"
 
 
-function IdentityPage() {
+function RequestIdentityCreation() {
   const navigate = useNavigate()
-  const { state } = useLocation();
   const [proofRequest, setProofRequest] = useState('');
+
   useEffect(() => {
+    // get the proof request params for this popup
     const params = new URLSearchParams(window.location.search)
     let proof_request = params.get('proof_request')
+    // if dapp requested for an identity, we expect a proof request name
     if (proof_request)
       setProofRequest(proof_request);
+    // otherwise throw an error
+    else
+      alert("Error: Expecting a proof name from dApp but didn't get any");
   }, [])
+  
   const submitNo = () => {
-    alert("No pressed")
+    alert("Will not respond to this request. Closing");
+    window.close();
   };
   const submitYes = () => {
     const { trapdoor, nullifier, commitment } = new Identity()
@@ -33,6 +39,7 @@ function IdentityPage() {
       identities.push(identity);
       localStorage.setItem("identities", JSON.stringify(identities));
     }
+    // navigating to the list of stored identities in both success and failure case
     navigate('/storedidentities');
   };
   return (
@@ -51,4 +58,4 @@ function IdentityPage() {
   );
   }
   
-  export default IdentityPage;
+  export default RequestIdentityCreation;
