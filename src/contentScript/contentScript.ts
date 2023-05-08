@@ -1,7 +1,7 @@
 // A copy of content script is with both the dApp/browser tab and the extension
 // However, both copies run in isolation in their own context
 // one copy is running in the context of browser
-// other copy is running in the context of extension 
+// other copy is running in the context of extension
 
 // dummy function
 window.onload = () => {
