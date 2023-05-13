@@ -23,5 +23,11 @@
       "tabs",
       "storage",
       "notifications"
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": ["zkFiles/*"],
+        "matches": ["*://*/*"]
+      }
     ]
 }

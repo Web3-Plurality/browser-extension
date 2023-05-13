@@ -1,6 +1,7 @@
 const path = require("path");
 const HTMLPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin")
+const webpack = require('webpack')
 
 module.exports = {
     entry: {
@@ -10,6 +11,9 @@ module.exports = {
 
     },
     mode: "production",
+    //mode: "development",
+    //devtool: "source-map",
+    //devtool: 'cheap-module-source-map',
     module: {
         rules: [
             {
@@ -50,11 +54,37 @@ module.exports = {
 	},
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
+        fallback: { 
+          "os": false,
+          "fs": false,
+          "tls": false,
+          "net": false,
+          "path": false,
+          "zlib": false,
+          "http": false,
+          "https": false,
+          "crypto": false,
+          "crypto-browserify": require.resolve("crypto-browserify"), 
+          "stream": require.resolve("stream-browserify"),
+          "process/browser": require.resolve("process/browser")
+        },
+        alias: {
+          process: "process/browser"
+        }
     },
 	plugins: [
+        // fix "process is not defined" error:
+        new webpack.ProvidePlugin({
+          process: 'process/browser',
+        }),
+        new webpack.DefinePlugin({
+          'process.env': JSON.stringify(process.env)
+        }),
         new CopyPlugin({
             patterns: [
                 { from: "manifest.json", to: "manifest.json" },
+                { from: path.resolve(__dirname, "./src/zkFiles"), to: path.resolve(__dirname, "./dist/zkFiles") },
+
             ],
         }),
         ...getHtmlPlugins(["index"]),

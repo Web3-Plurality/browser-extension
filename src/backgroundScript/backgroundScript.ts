@@ -5,6 +5,7 @@
 // NOTE: These APIs are not compatible with browsers other than chrome
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  console.log("HERE");
   // this script will create a new popup for creation of identity
   if (request.message == 'identityButtonClicked') {
     let data = request;
@@ -20,8 +21,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // this script will create a new popup for creation of proof
    else if (request.message == 'proofButtonClicked') {
     let data = request;
+    //const queryString = new URLSearchParams(data.proof_request).toString();
     chrome.windows.create({
-      url: chrome.runtime.getURL("index.html?nav=createproof&proof_request="+data.proof_request),
+      url: chrome.runtime.getURL("index.html?nav=createproof&proof_request="+JSON.stringify(data.proof_request)),
       type: "popup",
       top: data.top,
       left: data.left-400,

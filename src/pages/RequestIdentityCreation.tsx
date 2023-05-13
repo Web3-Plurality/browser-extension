@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import "../styles/App.css";
 import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
-import { Identity } from "@semaphore-protocol/identity"
-import { useNavigate } from "react-router-dom"
+import { Identity } from "@semaphore-protocol/identity";
+import { useNavigate } from "react-router-dom";
 
 
 function RequestIdentityCreation() {

@@ -29,12 +29,13 @@ export const sendIdentityCommitmentFromPopup = (identityCommitment: string) => {
 }
 
 // extension calls this function from proof popup window to send a message to the dApp browser
-export const sendFullProof = (fullProof: string) => {  
+export const sendFullProof = (fullProof:any) => {  
   // query the tab that is open and active in the browser but is not the current window
   // because the current window is the popup itself
   // extension sends the message to the filtered tab
+
   chrome.tabs.query({active: true, currentWindow: false}, function(tabs){
-      chrome.tabs.sendMessage(tabs[0].id!!, {action: "receive_full_proof", data: fullProof}, function(response) {});  
+    chrome.tabs.sendMessage(tabs[0].id!!, {action: "receive_full_proof", data: fullProof}, function(response) {});  
   });
 }
 
@@ -69,6 +70,8 @@ document.addEventListener('receive_identity_request_from_web_page', (event:any) 
 
 // this event listeners listen to event thrown from browser/dApp
 document.addEventListener('receive_proof_request_from_web_page', (event:any) => {
+  console.log("Received event");
+  console.log(event);
   var data = event.detail;
   console.log(data);
   // we now send a message to the background script where it can open a popup
