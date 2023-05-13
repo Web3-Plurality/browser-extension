@@ -28,9 +28,12 @@ function Splash() {
           console.log("HERE");
           // we need to see from where is this extension being launched and navigate accordingly
           const params = new URLSearchParams(window.location.search)
-          console.log(params); 
           let nav = "/"+params.get('nav')
+          console.log(nav); 
+
           let proof_request = params.get('proof_request')
+          console.log(proof_request); 
+
           // when dapp requests for identity, we send it to identity creation page
           if (nav === '/requestidentitycreation')
             navigate(nav+"?proof_request="+proof_request)

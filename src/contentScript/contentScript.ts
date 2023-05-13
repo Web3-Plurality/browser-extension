@@ -3,6 +3,10 @@
 // one copy is running in the context of browser
 // other copy is running in the context of extension
 
+import { Group } from "@semaphore-protocol/group";
+import { generateProof } from "@semaphore-protocol/proof";
+import { Identity } from "@semaphore-protocol/identity";
+
 // dummy function
 window.onload = () => {
     //document.dispatchEvent(new CustomEvent('ContentScriptEvent', {detail: "Hello from Content Script"}));
@@ -33,7 +37,6 @@ export const sendFullProof = (fullProof:any) => {
   // query the tab that is open and active in the browser but is not the current window
   // because the current window is the popup itself
   // extension sends the message to the filtered tab
-
   chrome.tabs.query({active: true, currentWindow: false}, function(tabs){
     chrome.tabs.sendMessage(tabs[0].id!!, {action: "receive_full_proof", data: fullProof}, function(response) {});  
   });
@@ -58,6 +61,7 @@ chrome.runtime.onMessage.addListener(function(msg: {action: string, data: string
 
 // this event listeners listen to event thrown from browser/dApp
 document.addEventListener('receive_identity_request_from_web_page', (event:any) => {
+  console.log("Received identity request event in content script");
   var data = event.detail;
   console.log(data);
   // we now send a message to the background script where it can open a popup
@@ -70,7 +74,7 @@ document.addEventListener('receive_identity_request_from_web_page', (event:any) 
 
 // this event listeners listen to event thrown from browser/dApp
 document.addEventListener('receive_proof_request_from_web_page', (event:any) => {
-  console.log("Received event");
+  console.log("Received proof request event in content script");
   console.log(event);
   var data = event.detail;
   console.log(data);
@@ -80,4 +84,21 @@ document.addEventListener('receive_proof_request_from_web_page', (event:any) => 
   function() { 
     //alert ("In send message callback"); 
   });
+});
+
+// this event listeners listen to event thrown from browser/dApp
+// generateProof runs fine here since this gets executed in the browser context
+document.addEventListener('test', async (event:any) => {
+  console.log("Received test event in content script");
+  console.log(event);
+  var data = event.detail;
+  console.log(data);
+    // TESTING CODE START
+    const identity = new Identity();
+    const group = new Group(1);
+    group.addMember(identity.commitment);
+    const signal = 1; // this value doesnt matter
+    const proof = await generateProof(identity, group, 1, signal);
+    console.log(proof);
+    // TESTING CODE END
 });

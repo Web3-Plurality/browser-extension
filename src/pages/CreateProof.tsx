@@ -3,9 +3,9 @@ import "../styles/App.css";
 import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { useState, useEffect } from "react";
-//import { sendFullProof } from "../contentScript/contentScript";
+import { sendFullProof } from "../contentScript/contentScript";
 import { Group } from "@semaphore-protocol/group";
-//import { generateProof } from "@semaphore-protocol/proof";
+import { generateProof } from "@semaphore-protocol/proof";
 import { Identity } from "@semaphore-protocol/identity";
 
 
@@ -70,11 +70,20 @@ export function CreateProof() {
       zkeyFilePath: "./zkFiles/semaphore.zkey",
       wasmFilePath: "./zkFiles/semaphore.wasm"
     });*/
+
+    const iframe = (document.getElementById('sandbox') as HTMLIFrameElement);
+    console.log(iframe);
+    window.addEventListener('message', (event) => {
+      console.log('EVAL output', event.data);
+    });
+    iframe.contentWindow!!.postMessage({"message":"It works!!"}, "*");
+    console.log("Message posted to iframe");
+
     //const proof = await generateProof(identity, merkelProof, groupId, signal);
 
     //console.log("Generated proof is: "+ proof);
     // TODO: Send the full proof to the dApp by creating another function like sendIdentityCommitment
-    //sendFullProof(fullProof);
+    //sendFullProof("fullProof");
   }
   
     
@@ -92,6 +101,7 @@ export function CreateProof() {
       ))}
       </ListGroup>
       </div>
+      <iframe src="sandbox.html" id="sandbox" style={{display: "none"}}></iframe>
     </div>
   );
 }
