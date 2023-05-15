@@ -25,7 +25,6 @@ function Splash() {
     })
     useEffect(() => {
         setTimeout(() => {
-          console.log("HERE");
           // we need to see from where is this extension being launched and navigate accordingly
           const params = new URLSearchParams(window.location.search)
           let nav = "/"+params.get('nav')
@@ -47,7 +46,8 @@ function Splash() {
       }, [])
 
   return (
-  <Container className="text-center" style={{position:'absolute', top: '40%'}}>
+    /* TODO: Centralize the div on popup */
+  <Container className="d-flex align-items-center justify-content-center text-center">
         <animated.div style={styles} >
     <Row className="justify-content-md-center">
       <Col><img src={logo} alt={"None"} style={{width: '50px', height: '60px' }} /></Col>
