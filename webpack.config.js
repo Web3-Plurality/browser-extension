@@ -69,7 +69,6 @@ module.exports = {
           process: "process/browser",
           // snarkjs uses ejs which has unsafe-eval function constructor
           ejs: path.resolve(__dirname, "src/config/ejsMock.js"),
-          //buffer: "buffer"
         }
     },
 	plugins: [
@@ -80,9 +79,6 @@ module.exports = {
         new webpack.DefinePlugin({
           'process.env': JSON.stringify(process.env)
         }),
-        /*new webpack.ProvidePlugin({
-          Buffer: ["buffer", "Buffer"],
-        }),*/
         new CopyPlugin({
             patterns: [
                 { from: "manifest.json", to: "manifest.json" },

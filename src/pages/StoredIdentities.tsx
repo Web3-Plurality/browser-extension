@@ -25,9 +25,10 @@ export function StoredIdentities() {
     const item = list.filter(item => item.name == name);
     setActiveName(name);
     const selectedIdentity = new Identity(item[0].storedIdentity);
-    
-    alert ("Commitment: "+selectedIdentity.commitment + "\nTrapdoor: "+selectedIdentity.trapdoor+"\nNullifier: "+selectedIdentity.nullifier);
+    //alert ("Commitment: "+selectedIdentity.commitment + "\nTrapdoor: "+selectedIdentity.trapdoor+"\nNullifier: "+selectedIdentity.nullifier);
     sendIdentityCommitmentFromPopup(JSON.stringify(selectedIdentity.commitment));
+    alert("Identity commitment sent to requesting application");
+    window.close();
   }
   
     

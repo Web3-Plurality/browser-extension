@@ -27,7 +27,6 @@ function RequestIdentityCreation() {
     window.close();
   };
   const submitYes = () => {
-    //const { trapdoor, nullifier, commitment } = new Identity()
     const newIdentity = new Identity();
 
     var identities = JSON.parse(localStorage.getItem("identities") || "[]");
@@ -38,8 +37,6 @@ function RequestIdentityCreation() {
     else 
     {
       var identity = {name:proofRequest, storedIdentity: newIdentity.toString()};
-      
-      //var identity = {name:proofRequest, commitment: commitment.toString(), trapdoor: trapdoor.toString(), nullifier: nullifier.toString()};
       identities.push(identity);
       localStorage.setItem("identities", JSON.stringify(identities));
     }

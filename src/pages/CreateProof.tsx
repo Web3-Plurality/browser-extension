@@ -5,7 +5,6 @@ import logo from '../images/logo.png';
 import { useState, useEffect } from "react";
 import { sendFullProof } from "../contentScript/contentScript";
 import { Group } from "@semaphore-protocol/group";
-import { generateProof } from "@semaphore-protocol/proof";
 import { Identity } from "@semaphore-protocol/identity";
 
 
@@ -19,18 +18,16 @@ export function CreateProof() {
 
   useEffect(() => {
     // get the proof request params for this popup
-    console.log("HERE IN CREATE PROOF");
     const params = new URLSearchParams(window.location.search)
     let proof_request:any = params.get('proof_request')
-    console.log("Received params: ");
+    console.log("Received create proof params: ");
     console.log(proof_request);
-    // if dapp requested for an identity, we expect a proof request name
+
+    // if dapp requested for an identity, we expect some params inside it
     if (proof_request) {
       proof_request = JSON.parse(proof_request);
       groupId = proof_request.groupId;
-      console.log("Group Id is : "+groupId);
       identityCommitments = proof_request.identityCommitments;
-      console.log("Identity commitments are: "+ identityCommitments);
     }
     // otherwise throw an error
     else
@@ -52,32 +49,44 @@ export function CreateProof() {
     // retrieving the selected identity from the list
     const storedIdentity = item[0].storedIdentity;
     const selectedIdentity = new Identity(storedIdentity);
-    console.log("Commitment: "+selectedIdentity.getCommitment());
-    console.log("Nullifier: "+selectedIdentity.getNullifier());
-    console.log("Trapdoor: "+selectedIdentity.getTrapdoor());
     
-    alert ("Commitment: "+selectedIdentity.commitment + "\nTrapdoor: "+selectedIdentity.trapdoor+"\nNullifier"+selectedIdentity.nullifier);
+    //alert ("Commitment: "+selectedIdentity.commitment + "\nTrapdoor: "+selectedIdentity.trapdoor+"\nNullifier"+selectedIdentity.nullifier);
 
     // recreating the group from the commitments received
     const group = new Group(groupId);
     group.addMembers(identityCommitments);
     const signal = 1; // this value doesnt matter
 
-    const index = group.indexOf(BigInt(selectedIdentity.commitment)) // 0
+
+    // passing around group object between scripts require proper type casting
+    // same proof can be generated using merkelProofs, which are much easier to pass around
+    // therefore, let's take the easier approach 
+    const index = group.indexOf(BigInt(selectedIdentity.commitment)) 
     console.log(index);
     const merkelProof = await group.generateMerkleProof(index);  
     console.log(merkelProof); 
 
 
+    // generateProof uses unsafe eval() functions, so it cannot be run in extension context
+    // so we create an iframe that runs in sandbox env where this function can be run
+    // extract the iframe that is running in sandbox environment
     const iframe = (document.getElementById('sandbox') as HTMLIFrameElement);
     console.log(iframe);
+
+    // register event for the response from the iframe
     window.addEventListener('message', (event) => {
       console.log('Generated ZK Proof: ', event.data);
+      // the sandboxed iframe returns the generated proof
+      // we need to send this proof to the browser/dApp
+      // calling function in content script
       sendFullProof(event.data);
+      alert("ZK Proof sent to the requesting application");
+      window.close();
     });
 
+    // send the proof generation message with params to the sandboxed iframe
     iframe.contentWindow!!.postMessage({"message":"It works!!", "identity": storedIdentity, "groupId": groupId, "merkleProof": merkelProof, "signal": signal}, "*");
-    console.log("Message posted to iframe");
+    console.log("ZK Proof Generation request posted to sandboxed iframe");
 
   }
   
