@@ -22,7 +22,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
    else if (request.message == 'proofButtonClicked') {
     console.log("Received proof request event in background script");
     let data = request;
-    //const queryString = new URLSearchParams(data.proof_request).toString();
     chrome.windows.create({
       url: chrome.runtime.getURL("index.html?nav=createproof&proof_request="+JSON.stringify(data.proof_request)),
       type: "popup",

@@ -4,7 +4,7 @@ import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity";
 import { useNavigate } from "react-router-dom";
-
+import "../utils/BigIntUtils";
 
 function RequestIdentityCreation() {
   const navigate = useNavigate()
@@ -27,7 +27,9 @@ function RequestIdentityCreation() {
     window.close();
   };
   const submitYes = () => {
-    const { trapdoor, nullifier, commitment } = new Identity()
+    //const { trapdoor, nullifier, commitment } = new Identity()
+    const newIdentity = new Identity();
+
     var identities = JSON.parse(localStorage.getItem("identities") || "[]");
     if (identities.filter((e: { name: string }) => e.name === proofRequest).length > 0) {
       /* identities already contains the element we're trying to create */
@@ -35,7 +37,9 @@ function RequestIdentityCreation() {
     }
     else 
     {
-      var identity = {name:proofRequest, commitment: commitment.toString(), trapdoor: trapdoor.toString(), nullifier: nullifier.toString()};
+      var identity = {name:proofRequest, storedIdentity: newIdentity.toString()};
+      
+      //var identity = {name:proofRequest, commitment: commitment.toString(), trapdoor: trapdoor.toString(), nullifier: nullifier.toString()};
       identities.push(identity);
       localStorage.setItem("identities", JSON.stringify(identities));
     }

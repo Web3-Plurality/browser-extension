@@ -52,9 +52,9 @@ chrome.runtime.onMessage.addListener(function(msg: {action: string, data: string
     }
     // if the message is to receive proof, we store the proof
     else if (msg.action == 'receive_full_proof') {
-      console.log("Message recieved!: "+msg.data);
+      console.log("Message recieved!: "+JSON.stringify(msg.data));
       // storing the proof in local storage of browser
-      localStorage.setItem("fullProof",msg.data);
+      localStorage.setItem("fullProof",JSON.stringify(msg.data));
     }
   });
 

@@ -4,6 +4,8 @@ import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { useState } from "react";
 import { sendIdentityCommitmentFromPopup } from "../contentScript/contentScript";
+import { Identity } from "@semaphore-protocol/identity";
+
 
 export function StoredIdentities() {
   const [activeName, setActiveName] = useState("");
@@ -22,8 +24,10 @@ export function StoredIdentities() {
   const displayItem = (name:string) => {
     const item = list.filter(item => item.name == name);
     setActiveName(name);
-    alert ("Commitment: "+item[0].commitment + "\nTrapdoor: "+item[0].trapdoor+"\nNullifier"+item[0].nullifier);
-    sendIdentityCommitmentFromPopup(JSON.stringify(item[0].commitment));
+    const selectedIdentity = new Identity(item[0].storedIdentity);
+    
+    alert ("Commitment: "+selectedIdentity.commitment + "\nTrapdoor: "+selectedIdentity.trapdoor+"\nNullifier: "+selectedIdentity.nullifier);
+    sendIdentityCommitmentFromPopup(JSON.stringify(selectedIdentity.commitment));
   }
   
     

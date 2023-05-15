@@ -48,42 +48,37 @@ export function CreateProof() {
   const displayItem = async (name:string) => {
     const item = list.filter(item => item.name == name);
     setActiveName(name);
-    alert ("Commitment: "+item[0].commitment + "\nTrapdoor: "+item[0].trapdoor+"\nNullifier"+item[0].nullifier);
+    
+    // retrieving the selected identity from the list
+    const storedIdentity = item[0].storedIdentity;
+    const selectedIdentity = new Identity(storedIdentity);
+    console.log("Commitment: "+selectedIdentity.getCommitment());
+    console.log("Nullifier: "+selectedIdentity.getNullifier());
+    console.log("Trapdoor: "+selectedIdentity.getTrapdoor());
+    
+    alert ("Commitment: "+selectedIdentity.commitment + "\nTrapdoor: "+selectedIdentity.trapdoor+"\nNullifier"+selectedIdentity.nullifier);
 
+    // recreating the group from the commitments received
     const group = new Group(groupId);
     group.addMembers(identityCommitments);
     const signal = 1; // this value doesnt matter
 
-    const identity = new Identity();
-    //const saveidentity = identity.toString();
-    //console.log(saveidentity);  //TODO: Need to recreate our identity in this same way
-
-    const index = group.indexOf(BigInt(item[0].commitment)) // 0
+    const index = group.indexOf(BigInt(selectedIdentity.commitment)) // 0
     console.log(index);
     const merkelProof = await group.generateMerkleProof(index);  
-    console.log(merkelProof);  
-    
-    //const selectedIdentity = new Identity(item[0]);
-    //console.log(selectedIdentity);
-    //const selectedIdentity = new Identity();
-    /*const proof = await generateProof(identity, merkelProof, groupId, signal, {
-      zkeyFilePath: "./zkFiles/semaphore.zkey",
-      wasmFilePath: "./zkFiles/semaphore.wasm"
-    });*/
+    console.log(merkelProof); 
+
 
     const iframe = (document.getElementById('sandbox') as HTMLIFrameElement);
     console.log(iframe);
     window.addEventListener('message', (event) => {
-      console.log('EVAL output', event.data);
+      console.log('Generated ZK Proof: ', event.data);
+      sendFullProof(event.data);
     });
-    iframe.contentWindow!!.postMessage({"message":"It works!!"}, "*");
+
+    iframe.contentWindow!!.postMessage({"message":"It works!!", "identity": storedIdentity, "groupId": groupId, "merkleProof": merkelProof, "signal": signal}, "*");
     console.log("Message posted to iframe");
 
-    //const proof = await generateProof(identity, merkelProof, groupId, signal);
-
-    //console.log("Generated proof is: "+ proof);
-    // TODO: Send the full proof to the dApp by creating another function like sendIdentityCommitment
-    //sendFullProof("fullProof");
   }
   
     

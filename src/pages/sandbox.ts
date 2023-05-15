@@ -4,17 +4,19 @@ import { generateProof } from "@semaphore-protocol/proof";
 
 
 window.addEventListener("message", async function(event) {
+
     console.info("message received in sandbox: " + event.data.message);  
-    console.log("trying eval"+ eval(event.data));  
+    console.info("identity received in sandbox: " + event.data.identity);
+    console.info("groupId received in sandbox: " + event.data.groupId);    
+    console.info("merkel proof received in sandbox: " + event.data.merkleProof);  
+    console.info("signal received in sandbox: " + event.data.signal);  
 
-    const groupId = 1;
-    const group = new Group(groupId);
-    const identity = new Identity();
+    const identity = new Identity(event.data.identity);
+    const merkleProof = event.data.merkleProof;
+    const groupId = event.data.groupId;
+    const signal = event.data.signal;
 
-    group.addMember(identity.commitment);
-    const signal = 1; // this value doesnt matter
-
-    const proof = await generateProof(identity, group, groupId, signal);
+    const proof = await generateProof(identity, merkleProof, groupId, signal);
     console.log("Generated proof is: "+ proof);
 
     console.log(event.source);

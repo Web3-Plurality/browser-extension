@@ -22,6 +22,10 @@ export function AddNewIdentity() {
   
   
   const addItem = () => {
+
+    //TODO: Unify the list structure in the entire extension
+    // the popups use the format {name:"", selectedIdentity: identity.toString()}
+    // here we are storing the identity in the trapdoor nullifier commitment format
     const { trapdoor, nullifier, commitment } = new Identity()
       const newList = [
         ...list,
