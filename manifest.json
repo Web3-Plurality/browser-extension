@@ -24,12 +24,6 @@
       "tabs",
       "storage"
     ],
-    "web_accessible_resources": [
-      {
-        "resources": ["zkFiles/*"],
-        "matches": ["*://*/*"]
-      }
-    ],
     "sandbox": {
       "pages": [
         "sandbox.html"

@@ -8,14 +8,9 @@ module.exports = {
         index: path.resolve("./src/index.tsx"),
         contentScript: path.resolve("./src/contentScript/contentScript.ts"),
         backgroundScript: path.resolve("./src/backgroundScript/backgroundScript.ts"),
-        sandbox: path.resolve("./src/pages/sandbox.ts")
+        sandbox: path.resolve("./src/sandbox/sandbox.ts")
     },
     mode: "production",
-    //mode: "development",
-    //devtool: 'cheap-module-source-map',
-
-    //devtool: "inline-source-map",
-    //devtool: "source-map",
     module: {
         rules: [
             {
@@ -74,7 +69,7 @@ module.exports = {
           process: "process/browser",
           // snarkjs uses ejs which has unsafe-eval function constructor
           ejs: path.resolve(__dirname, "src/config/ejsMock.js"),
-          buffer: "buffer"
+          //buffer: "buffer"
         }
     },
 	plugins: [
@@ -85,14 +80,13 @@ module.exports = {
         new webpack.DefinePlugin({
           'process.env': JSON.stringify(process.env)
         }),
-        new webpack.ProvidePlugin({
+        /*new webpack.ProvidePlugin({
           Buffer: ["buffer", "Buffer"],
-        }),
+        }),*/
         new CopyPlugin({
             patterns: [
                 { from: "manifest.json", to: "manifest.json" },
-                { from: path.resolve(__dirname, "./src/zkFiles"), to: path.resolve(__dirname, "./dist/zkFiles") },
-                { from: path.resolve(__dirname, "./src/pages/sandbox.html"), to: path.resolve(__dirname, "./dist") },
+                { from: path.resolve(__dirname, "./src/sandbox/sandbox.html"), to: path.resolve(__dirname, "./dist") },
             ],
         }),
         ...getHtmlPlugins(["index"]),
