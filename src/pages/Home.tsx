@@ -16,6 +16,7 @@ function Home() {
   const [show, setShow] = useState(false);
   const [caller, setCaller] = useState('');
 
+  //TODO: Pull modal dialog out into a component and use in all corresponding pages
   const handleClose = () => {
     setShow(false);
     // do not close or redirect on invalid login, just close the modal and allow the user to try the login again
@@ -36,7 +37,7 @@ function Home() {
 
   const onSubmit = () => {
     if (username === 'admin' && password === 'admin')
-      navigate('/addidentity');
+      navigate('/storedidentities');
     else
       //alert("Invalid username or password")
       handleShow("Invalid Credentials", "Invalid username or password","onSubmit");
