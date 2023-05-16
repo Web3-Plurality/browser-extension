@@ -5,13 +5,33 @@ import logo from '../images/logo.png';
 import { useState } from "react";
 import { sendIdentityCommitmentFromPopup } from "../contentScript/contentScript";
 import { Identity } from "@semaphore-protocol/identity";
-
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export function StoredIdentities() {
   const [activeName, setActiveName] = useState("");
   var identities = JSON.parse(localStorage.getItem("identities") || "[]");
   const initialData: any[] | (() => any[]) = identities;
   const [list] = useState(initialData);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalBody, setModalBody] = useState('');
+
+  const [show, setShow] = useState(false);
+  const [caller, setCaller] = useState('');
+
+  const handleClose = () => {
+    setShow(false);
+    if (caller === "displayItem") {
+      window.close();
+    }
+    // in all other cases do nothing
+  }
+  const handleShow = (title: string, body: string, callerFunc: string) => {
+    setCaller(callerFunc);
+    setModalTitle(title);
+    setModalBody(body);
+    setShow(true);
+  }
 
   const ListItem = ({ name, onClick }: { name:string, onClick: any }) => (
     <div className={activeName==name ? "active list-group-item" : "list-group-item" }>
@@ -25,10 +45,8 @@ export function StoredIdentities() {
     const item = list.filter(item => item.name == name);
     setActiveName(name);
     const selectedIdentity = new Identity(item[0].storedIdentity);
-    //alert ("Commitment: "+selectedIdentity.commitment + "\nTrapdoor: "+selectedIdentity.trapdoor+"\nNullifier: "+selectedIdentity.nullifier);
     sendIdentityCommitmentFromPopup(JSON.stringify(selectedIdentity.commitment));
-    alert("Identity commitment sent to requesting application");
-    window.close();
+    handleShow("Identity Selected", "Sent selected identity to the browser/dApp","displayItem");
   }
   
     
@@ -45,6 +63,26 @@ export function StoredIdentities() {
       ))}
       </ListGroup>
       </div>
+      <Modal size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      backdrop="static"
+      keyboard={false}
+      show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalBody}</Modal.Body>
+        <Modal.Footer>
+          {/*<Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>*/}
+          {/* TODO: Pick button styles from a css file */}
+          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

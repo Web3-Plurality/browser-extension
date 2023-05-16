@@ -5,12 +5,32 @@ import logo from '../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity"
 import { useState } from "react";
 import { sendIdentityCommitment } from "../contentScript/contentScript";
-
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export function AddNewIdentity() {
   const [activeId, setActiveId] = useState(0);
   const initialData: any[] | (() => any[]) = [];
   const [list, updateList] = useState(initialData);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalBody, setModalBody] = useState('');
+
+  const [show, setShow] = useState(false);
+  const [caller, setCaller] = useState('');
+
+  const handleClose = () => {
+    setShow(false);
+    if (caller === "displayItem") {
+      window.close();
+    }
+    // in all other cases do nothing
+  }
+  const handleShow = (title: string, body: string, callerFunc: string) => {
+    setCaller(callerFunc);
+    setModalTitle(title);
+    setModalBody(body);
+    setShow(true);
+  }
 
   const ListItem = ({ id, onClick }: { id:number, onClick: any }) => (
     <div className={activeId==id ? "active list-group-item" : "list-group-item" }>
@@ -44,8 +64,10 @@ export function AddNewIdentity() {
   const displayItem = (id:number) => {
     const item = list.filter(item => item.id == id);
     setActiveId(id);
-    alert ("Commitment: "+item[0].commitment + "\nTrapdoor: "+item[0].trapdoor+"\nNullifier"+item[0].nullifier);
     sendIdentityCommitment(JSON.stringify(item[0].commitment));
+    //handleShow("Identity Selected", "Commitment: "+item[0].commitment + "\nTrapdoor: "+item[0].trapdoor+"\nNullifier: "+item[0].nullifier,"displayItem");
+    handleShow("Identity Selected", "Sent selected identity to the browser/dApp","displayItem");
+    
   }
     
   return (
@@ -62,6 +84,26 @@ export function AddNewIdentity() {
       ))}
       </ListGroup>
       </div>
+      <Modal size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      backdrop="static"
+      keyboard={false}
+      show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalBody}</Modal.Body>
+        <Modal.Footer>
+          {/*<Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>*/}
+          {/* TODO: Pick button styles from a css file */}
+          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

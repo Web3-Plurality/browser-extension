@@ -6,7 +6,8 @@ import { useState, useEffect } from "react";
 import { sendFullProof } from "../contentScript/contentScript";
 import { Group } from "@semaphore-protocol/group";
 import { Identity } from "@semaphore-protocol/identity";
-
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export function CreateProof() {
   const [activeName, setActiveName] = useState("");
@@ -15,6 +16,25 @@ export function CreateProof() {
   const [list] = useState(initialData);
   let groupId: number;
   let identityCommitments: [];
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalBody, setModalBody] = useState('');
+
+  const [show, setShow] = useState(false);
+  const [caller, setCaller] = useState('');
+
+  const handleClose = () => {
+    setShow(false);
+    if (caller === "error" || caller === "displayItem") {
+      window.close();
+    }
+    // in all other cases do nothing
+  }
+  const handleShow = (title: string, body: string, callerFunc: string) => {
+    setCaller(callerFunc);
+    setModalTitle(title);
+    setModalBody(body);
+    setShow(true);
+  }
 
   useEffect(() => {
     // get the proof request params for this popup
@@ -31,7 +51,8 @@ export function CreateProof() {
     }
     // otherwise throw an error
     else
-      alert("Error: Expecting a proof name from dApp but didn't get any");
+      //alert("Error: Expecting a proof name from dApp but didn't get any");
+      handleShow("Error", "Expecting a proof name from dApp but didn't get any","error")
   }, [])
   
   const ListItem = ({ name, onClick }: { name:string, onClick: any }) => (
@@ -80,8 +101,9 @@ export function CreateProof() {
       // we need to send this proof to the browser/dApp
       // calling function in content script
       sendFullProof(event.data);
-      alert("ZK Proof sent to the requesting application");
-      window.close();
+      //alert("ZK Proof sent to the requesting application");
+      handleShow("Proof Sent", "ZK Proof sent to the requesting application","displayItem")
+
     });
 
     // send the proof generation message with params to the sandboxed iframe
@@ -106,6 +128,26 @@ export function CreateProof() {
       </ListGroup>
       </div>
       <iframe src="sandbox.html" id="sandbox" style={{display: "none"}}></iframe>
+      <Modal size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      backdrop="static"
+      keyboard={false}
+      show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalBody}</Modal.Body>
+        <Modal.Footer>
+          {/*<Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>*/}
+          {/* TODO: Pick button styles from a css file */}
+          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

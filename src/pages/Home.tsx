@@ -3,12 +3,29 @@ import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom"
 import { useState } from 'react'
-
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 function Home() {
   const navigate = useNavigate()
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalBody, setModalBody] = useState('');
+
+  const [show, setShow] = useState(false);
+  const [caller, setCaller] = useState('');
+
+  const handleClose = () => {
+    setShow(false);
+    // do not close or redirect on invalid login, just close the modal and allow the user to try the login again
+  }
+  const handleShow = (title: string, body: string, callerFunc: string) => {
+    setCaller(callerFunc);
+    setModalTitle(title);
+    setModalBody(body);
+    setShow(true);
+  }
 
   const handleUsernameChange = (event: any) => {
     setUsername(event.target.value);
@@ -21,7 +38,9 @@ function Home() {
     if (username === 'admin' && password === 'admin')
       navigate('/addidentity');
     else
-      alert("Invalid username or password")
+      //alert("Invalid username or password")
+      handleShow("Invalid Credentials", "Invalid username or password","onSubmit");
+
   } 
   return (
     <div>
@@ -63,6 +82,26 @@ function Home() {
     </div>
   </div>
   </section>
+  <Modal size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      backdrop="static"
+      keyboard={false}
+      show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalBody}</Modal.Body>
+        <Modal.Footer>
+          {/*<Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>*/}
+          {/* TODO: Pick button styles from a css file */}
+          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
   </div>  
   );
 }
