@@ -30,12 +30,13 @@ export const sendIdentityCommitmentFromPopup = (identityCommitment: string) => {
 }
 
 // extension calls this function from proof popup window to send a message to the dApp browser
-export const sendFullProof = (fullProof:any) => {  
+export const sendFullProof = (fullProof:any, identityCommitment: any) => {  
   // query the tab that is open and active in the browser but is not the current window
   // because the current window is the popup itself
   // extension sends the message to the filtered tab
+  const response = {"fullProof": fullProof, "identityCommitment": identityCommitment};
   chrome.tabs.query({active: true, currentWindow: false}, function(tabs){
-    chrome.tabs.sendMessage(tabs[0].id!!, {action: "receive_full_proof", data: fullProof}, function(response) {});  
+    chrome.tabs.sendMessage(tabs[0].id!!, {action: "receive_full_proof", data: JSON.stringify(response)}, function(response) {});  
   });
 }
 
@@ -49,9 +50,15 @@ chrome.runtime.onMessage.addListener(function(msg: {action: string, data: string
     }
     // if the message is to receive proof, we store the proof
     else if (msg.action == 'receive_full_proof') {
-      console.log("Message recieved!: "+JSON.stringify(msg.data));
+      console.log("Message recieved!: "+msg.data);
+      const obj = JSON.parse(msg.data);
+      console.log("Full proof is: "+JSON.stringify(obj.fullProof));
+      console.log("Identity commitment is: "+JSON.stringify(obj.identityCommitment));
+
       // storing the proof in local storage of browser
-      localStorage.setItem("fullProof",JSON.stringify(msg.data));
+      localStorage.setItem("fullProof",JSON.stringify(obj.fullProof));
+      localStorage.setItem("identityCommitment",JSON.stringify(obj.identityCommitment));
+
     }
   });
 

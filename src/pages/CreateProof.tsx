@@ -71,8 +71,6 @@ export function CreateProof() {
     const storedIdentity = item[0].storedIdentity;
     const selectedIdentity = new Identity(storedIdentity);
     
-    //alert ("Commitment: "+selectedIdentity.commitment + "\nTrapdoor: "+selectedIdentity.trapdoor+"\nNullifier"+selectedIdentity.nullifier);
-
     // recreating the group from the commitments received
     const group = new Group(groupId);
     group.addMembers(identityCommitments);
@@ -100,7 +98,7 @@ export function CreateProof() {
       // the sandboxed iframe returns the generated proof
       // we need to send this proof to the browser/dApp
       // calling function in content script
-      sendFullProof(event.data);
+      sendFullProof(event.data, selectedIdentity.commitment);
       //alert("ZK Proof sent to the requesting application");
       handleShow("Proof Sent", "ZK Proof sent to the requesting application","displayItem")
 
