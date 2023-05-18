@@ -7,23 +7,28 @@ import { useNavigate } from "react-router-dom";
 import "../utils/BigIntUtils";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { sendIdentityCommitmentFromPopup } from "../contentScript/contentScript";
+
 
 function RequestIdentityCreation() {
   const navigate = useNavigate()
   const [proofRequest, setProofRequest] = useState('');
   const [modalTitle, setModalTitle] = useState('');
   const [modalBody, setModalBody] = useState('');
-
+  const [identity, setIdentity] = useState<Identity>();
   const [show, setShow] = useState(false);
   const [caller, setCaller] = useState('');
   
+  //let identity: Identity;
+
   const handleClose = () => {
     setShow(false);
     if (caller === "submitNo") {
       window.close();
     }
     else if (caller === "submitYes") {
-      navigate('/storedidentities?proof_request_name='+proofRequest);
+      sendIdentityCommitmentFromPopup(JSON.stringify(identity?.commitment));
+      handleShow("Identity Selected", "Sent selected identity to the browser/dApp","submitNo");
     }
     // in all other cases do nothing
   }
@@ -54,18 +59,26 @@ function RequestIdentityCreation() {
     const newIdentity = new Identity();
 
     var identities = JSON.parse(localStorage.getItem("identities") || "[]");
-    if (identities.filter((e: { name: string }) => e.name === proofRequest).length > 0) {
+    let item = identities.filter((e: { name: string }) => e.name === proofRequest); 
+    if (item.length > 0) {
       /* identities already contains the element we're trying to create */
       //alert("Error: entry already exists");
+      //setIdentity(item);
+      const selectedIdentity = new Identity(item.storedIdentity);
+      setIdentity(selectedIdentity);
       handleShow("Identity Already Exists", "Identity with this name already exists. Reusing it", "submitYes");
     }
     else 
     {
-      var identity = {name:proofRequest, storedIdentity: newIdentity.toString()};
-      identities.push(identity);
+      var iden = {name:proofRequest, storedIdentity: newIdentity.toString()};
+      identities.push(iden);
       localStorage.setItem("identities", JSON.stringify(identities));
+      setIdentity(newIdentity);
+      console.log("Identity is: "+ identity?.commitment);
+      handleShow("Identity Created", "Sending selected identity to the browser/dApp","submitYes");
+
       // navigating to the list of stored identities in both success and failure case
-      navigate('/storedidentities');
+      //navigate('/storedidentities');
     }
   };
   return (

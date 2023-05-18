@@ -1,9 +1,9 @@
 import { ListGroup } from "react-bootstrap";
-import "../styles/App.css";
-import "../styles/bootstrap.css";
-import logo from '../images/logo.png';
+import "../../styles/App.css";
+import "../../styles/bootstrap.css";
+import logo from '../../images/logo.png';
 import { useState, useEffect } from "react";
-import { sendIdentityCommitmentFromPopup } from "../contentScript/contentScript";
+import { sendIdentityCommitmentFromPopup } from "../../contentScript/contentScript";
 import { Identity } from "@semaphore-protocol/identity";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';

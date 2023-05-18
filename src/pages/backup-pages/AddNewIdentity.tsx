@@ -1,10 +1,10 @@
 import { ListGroup } from "react-bootstrap";
-import "../styles/App.css";
-import "../styles/bootstrap.css";
-import logo from '../images/logo.png';
+import "../../styles/App.css";
+import "../../styles/bootstrap.css";
+import logo from '../../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity"
 import { useState } from "react";
-import { sendIdentityCommitment } from "../contentScript/contentScript";
+import { sendIdentityCommitment } from "../../contentScript/contentScript";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
