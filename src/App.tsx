@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import AddNewIdentity from "./pages/AddNewIdentity";
 import Splash from "./pages/Splash";
 import RequestIdentityCreation from "./pages/RequestIdentityCreation";
+import RequestProofCreation from "./pages/RequestProofCreation";
 import StoredIdentities from "./pages/StoredIdentities";
 import CreateProof from "./pages/CreateProof";
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/home" element={<Home />}/>
         <Route path="/addidentity" element={<AddNewIdentity />}/>
         <Route path="/requestidentitycreation" element={<RequestIdentityCreation />}/>
+        <Route path="/requestproofcreation" element={<RequestProofCreation />}/>
         <Route path="/storedidentities" element={<StoredIdentities />}/>
         <Route path="/createproof" element={<CreateProof />}/>
         <Route path="/" element={<Splash/>}/>

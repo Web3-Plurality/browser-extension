@@ -53,7 +53,6 @@ export function StoredIdentities() {
     </div>
   );
   
-  
   const displayItem = (name:string) => {
     const item = list.filter(item => item.name == name);
     setActiveName(name);
@@ -62,7 +61,6 @@ export function StoredIdentities() {
     handleShow("Identity Selected", "Sent selected identity to the browser/dApp","displayItem");
   }
   
-    
   return (
     <div>
       <span className="h1 fw-bold mb-0 center">
