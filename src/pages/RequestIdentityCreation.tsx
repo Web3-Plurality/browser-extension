@@ -23,7 +23,7 @@ function RequestIdentityCreation() {
       window.close();
     }
     else if (caller === "submitYes") {
-      navigate('/storedidentities');
+      navigate('/storedidentities?proof_request_name='+proofRequest);
     }
     // in all other cases do nothing
   }
@@ -57,7 +57,7 @@ function RequestIdentityCreation() {
     if (identities.filter((e: { name: string }) => e.name === proofRequest).length > 0) {
       /* identities already contains the element we're trying to create */
       //alert("Error: entry already exists");
-      handleShow("Error", "Entry already exists. Reusing it", "submitYes");
+      handleShow("Identity Already Exists", "Identity with this name already exists. Reusing it", "submitYes");
     }
     else 
     {

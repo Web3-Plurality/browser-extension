@@ -2,7 +2,7 @@ import { ListGroup } from "react-bootstrap";
 import "../styles/App.css";
 import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { sendIdentityCommitmentFromPopup } from "../contentScript/contentScript";
 import { Identity } from "@semaphore-protocol/identity";
 import Modal from 'react-bootstrap/Modal';
@@ -19,6 +19,19 @@ export function StoredIdentities() {
   const [show, setShow] = useState(false);
   const [caller, setCaller] = useState('');
 
+  useEffect(() => {
+    // get the proof request params for this popup
+    const params = new URLSearchParams(window.location.search)
+    console.log("Received params: "+ params);
+    let proof_request = params.get('proof_request_name')
+    if (proof_request)
+    {
+      console.log(`Received proof request name ${proof_request} in navigation so directly selecting it`);
+      displayItem(proof_request);
+    }
+    // otherwise allow user to see the identities in a list
+  }, [])
+  
   const handleClose = () => {
     setShow(false);
     if (caller === "displayItem") {
@@ -59,7 +72,7 @@ export function StoredIdentities() {
       <div className="col-12" style={{marginTop: '10px'}}>
       <ListGroup>
       {list.map(item => (
-        <ListItem className="list-group-item"  key={item.name} {...item} onClick={displayItem}/>
+        <ListItem className="list-group-item"  key={item.name} {...item} onClick={{/*displayItem*/}}/>
       ))}
       </ListGroup>
       </div>

@@ -48,6 +48,13 @@ export function CreateProof() {
       proof_request = JSON.parse(proof_request);
       groupId = proof_request.groupId;
       identityCommitments = proof_request.identityCommitments;
+
+      //TODO: Check why the iframe doesn't respond if we do this.
+      /*let proof_request_name = proof_request.title.toString();
+      if (proof_request_name) {
+        console.log("Proof request name received in navigation is: "+ proof_request_name);
+        displayItem(proof_request_name);
+      }*/
     }
     // otherwise throw an error
     else
@@ -66,7 +73,8 @@ export function CreateProof() {
   const displayItem = async (name:string) => {
     const item = list.filter(item => item.name == name);
     setActiveName(name);
-    
+    // TODO: Check if the name actually exists or not
+
     // retrieving the selected identity from the list
     const storedIdentity = item[0].storedIdentity;
     const selectedIdentity = new Identity(storedIdentity);

@@ -8,7 +8,6 @@ import { sendIdentityCommitment } from "../contentScript/contentScript";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-
 export function AddNewIdentity() {
   const [activeId, setActiveId] = useState(0);
   const initialData: any[] | (() => any[]) = [];
