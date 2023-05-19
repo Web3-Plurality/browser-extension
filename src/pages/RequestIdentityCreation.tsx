@@ -28,7 +28,7 @@ function RequestIdentityCreation() {
     }
     else if (caller === "submitYes") {
       sendIdentityCommitmentFromPopup(JSON.stringify(identity?.commitment));
-      handleShow("Identity Selected", "Sent selected identity to the browser/dApp","submitNo");
+      handleShow("Identity Sent", "Sent selected identity to the browser/dApp","submitNo");
     }
     // in all other cases do nothing
   }
