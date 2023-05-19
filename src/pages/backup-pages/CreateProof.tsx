@@ -1,9 +1,9 @@
 import { ListGroup } from "react-bootstrap";
-import "../styles/App.css";
-import "../styles/bootstrap.css";
-import logo from '../images/logo.png';
+import "../../styles/App.css";
+import "../../styles/bootstrap.css";
+import logo from '../../images/logo.png';
 import { useState, useEffect } from "react";
-import { sendFullProof } from "../contentScript/contentScript";
+import { sendFullProof } from "../../contentScript/contentScript";
 import { Group } from "@semaphore-protocol/group";
 import { Identity } from "@semaphore-protocol/identity";
 import Modal from 'react-bootstrap/Modal';
@@ -48,6 +48,13 @@ export function CreateProof() {
       proof_request = JSON.parse(proof_request);
       groupId = proof_request.groupId;
       identityCommitments = proof_request.identityCommitments;
+
+      //TODO: Check why the iframe doesn't respond if we do this.
+      let proof_request_name = proof_request.title.toString();
+      if (proof_request_name) {
+        console.log("Proof request name received in navigation is: "+ proof_request_name);
+        displayItem(proof_request_name);
+      }
     }
     // otherwise throw an error
     else
@@ -65,18 +72,19 @@ export function CreateProof() {
   
   const displayItem = async (name:string) => {
     const item = list.filter(item => item.name == name);
+    console.log("Item is: "+ item);
     setActiveName(name);
-    
+    console.log("In display item setting active name: "+ name);
     // retrieving the selected identity from the list
     const storedIdentity = item[0].storedIdentity;
     const selectedIdentity = new Identity(storedIdentity);
-    
+    console.log("Selected identity: "+ selectedIdentity);
     // recreating the group from the commitments received
     const group = new Group(groupId);
     group.addMembers(identityCommitments);
     const signal = 1; // this value doesnt matter
 
-
+    console.log("Group created: "+ group);
     // passing around group object between scripts require proper type casting
     // same proof can be generated using merkelProofs, which are much easier to pass around
     // therefore, let's take the easier approach 

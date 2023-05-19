@@ -37,7 +37,7 @@ function Splash() {
           if (nav === '/requestidentitycreation')
             navigate(nav+"?proof_request="+proof_request)
           // when dapp requests for proof, we send it to proof creation page
-          else if (nav === '/createproof')
+          else if (nav === '/requestproofcreation')
             navigate(nav+"?proof_request="+proof_request)
           // otherwise, the user has clicked the extension logo, so we take it to home page
           else
