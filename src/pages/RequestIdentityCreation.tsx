@@ -56,29 +56,23 @@ function RequestIdentityCreation() {
   };
 
   const submitYes = () => {
-    const newIdentity = new Identity();
 
     var identities = JSON.parse(localStorage.getItem("identities") || "[]");
     let item = identities.filter((e: { name: string }) => e.name === proofRequest); 
     if (item.length > 0) {
       /* identities already contains the element we're trying to create */
-      //alert("Error: entry already exists");
-      //setIdentity(item);
-      const selectedIdentity = new Identity(item.storedIdentity);
+      const selectedIdentity = new Identity(item[0].storedIdentity);
       setIdentity(selectedIdentity);
       handleShow("Identity Already Exists", "Identity with this name already exists. Reusing it", "submitYes");
     }
     else 
     {
+      const newIdentity = new Identity();
       var iden = {name:proofRequest, storedIdentity: newIdentity.toString()};
       identities.push(iden);
       localStorage.setItem("identities", JSON.stringify(identities));
       setIdentity(newIdentity);
-      console.log("Identity is: "+ identity?.commitment);
       handleShow("Identity Created", "Sending selected identity to the browser/dApp","submitYes");
-
-      // navigating to the list of stored identities in both success and failure case
-      //navigate('/storedidentities');
     }
   };
   return (
