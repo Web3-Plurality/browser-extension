@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { sendFullProof } from "../../contentScript/contentScript";
 import { Group } from "@semaphore-protocol/group";
 import { Identity } from "@semaphore-protocol/identity";
+import { ListItem } from "../../components/ListItem"
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
@@ -62,12 +63,12 @@ export function CreateProof() {
       handleShow("Error", "Expecting a proof name from dApp but didn't get any","error")
   }, [])
   
-  const ListItem = ({ name, onClick }: { name:string, onClick: any }) => (
-    <div className={activeName==name ? "active list-group-item" : "list-group-item" }>
-      <span> </span>
-      <p onClick={() => onClick(name)} > {name} </p>
-    </div>
-  );
+  // const ListItem = ({ name, onClick }: { name:string, onClick: any }) => (
+  //   <div className={activeName==name ? "active list-group-item" : "list-group-item" }>
+  //     <span> </span>
+  //     <p onClick={() => onClick(name)} > {name} </p>
+  //   </div>
+  // );
   
   
   const displayItem = async (name:string) => {
@@ -127,9 +128,9 @@ export function CreateProof() {
       </span>
       <div className="col-12" style={{marginTop: '10px'}}>
         <p>Choose the proof generation entry</p>
-      <ListGroup>
+      <ListGroup as="ol" className="list-group-numbered">
       {list.map(item => (
-        <ListItem className="list-group-item"  key={item.name} {...item} onClick={displayItem}/>
+        <ListItem as="li" className="list-group-item"  key={item.name} {...item} activeName={activeName} onClick={displayItem}/>
       ))}
       </ListGroup>
       </div>

@@ -5,6 +5,7 @@ import logo from '../../images/logo.png';
 import { useState, useEffect } from "react";
 import { sendIdentityCommitmentFromPopup } from "../../contentScript/contentScript";
 import { Identity } from "@semaphore-protocol/identity";
+import { ListItem } from "../../components/ListItem"
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
@@ -46,12 +47,12 @@ export function StoredIdentities() {
     setShow(true);
   }
 
-  const ListItem = ({ name, onClick }: { name:string, onClick: any }) => (
-    <div className={activeName==name ? "active list-group-item" : "list-group-item" }>
-      <span> </span>
-      <p onClick={() => onClick(name)} > {name} </p>
-    </div>
-  );
+  // const ListItem = ({ name, onClick }: { name:string, onClick: any }) => (
+  //   <div className={activeName==name ? "active list-group-item" : "list-group-item" }>
+  //     <span> </span>
+  //     <p onClick={() => onClick(name)} > {name} </p>
+  //   </div>
+  // );
   
   const displayItem = (name:string) => {
     const item = list.filter(item => item.name == name);
@@ -68,9 +69,9 @@ export function StoredIdentities() {
           Plurality
       </span>
       <div className="col-12" style={{marginTop: '10px'}}>
-      <ListGroup>
+      <ListGroup as="ol" className="list-group-numbered">
       {list.map(item => (
-        <ListItem className="list-group-item"  key={item.name} {...item} onClick={{/*displayItem*/}}/>
+        <ListItem key={item.name} {...item} activeName={activeName} onClick={displayItem}/>
       ))}
       </ListGroup>
       </div>
