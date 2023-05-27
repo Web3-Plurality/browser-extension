@@ -68,10 +68,11 @@ export function StoredIdentities() {
         <img src={logo} alt={"Login image"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
           Plurality
       </span>
-      <div className="col-12" style={{marginTop: '10px'}}>
+      <h1 className="text-center" style={{marginTop: '30px'}}>Available Credentials</h1>
+      <div className="col-12" style={{marginTop: '15px'}}>
       <ListGroup as="ol" className="list-group-numbered">
       {list.map(item => (
-        <ListItem key={item.name} {...item} activeName={activeName} onClick={displayItem}/>
+        <ListItem style={{ marginBottom:'5px'}} key={item.name} {...item} activeName={activeName} onClick={displayItem}/>
       ))}
       </ListGroup>
       </div>
