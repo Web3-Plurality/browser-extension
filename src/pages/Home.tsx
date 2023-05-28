@@ -3,8 +3,8 @@ import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom"
 import { useState } from 'react'
-import { Modal, Button, Form } from 'react-bootstrap';
-
+import { Button, Form } from 'react-bootstrap';
+import { ModalBox } from "../components/ModalBox"
 
 function Home() {
   const navigate = useNavigate()
@@ -80,26 +80,7 @@ function Home() {
     </div>
   </div>
   </section>
-  <Modal size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      backdrop="static"
-      keyboard={false}
-      show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{modalBody}</Modal.Body>
-        <Modal.Footer>
-          {/*<Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>*/}
-          {/* TODO: Pick button styles from a css file */}
-          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
+  <ModalBox show={show} modalTitle={modalTitle} modalBody={modalBody} handleClose={handleClose} />
   </div>  
   );
 }

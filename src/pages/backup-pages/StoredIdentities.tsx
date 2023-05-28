@@ -6,8 +6,7 @@ import { useState, useEffect } from "react";
 import { sendIdentityCommitmentFromPopup } from "../../contentScript/contentScript";
 import { Identity } from "@semaphore-protocol/identity";
 import { ListItem } from "../../components/ListItem"
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { ModalBox } from "../../components/ModalBox"
 
 export function StoredIdentities() {
   const [activeName, setActiveName] = useState("");
@@ -55,7 +54,7 @@ export function StoredIdentities() {
   // );
   
   const displayItem = (name:string) => {
-    const item = list.filter(item => item.name == name);
+    const item = list.filter(item => item.name === name);
     setActiveName(name);
     const selectedIdentity = new Identity(item[0].storedIdentity);
     sendIdentityCommitmentFromPopup(JSON.stringify(selectedIdentity.commitment));
@@ -65,7 +64,7 @@ export function StoredIdentities() {
   return (
     <div>
       <span className="h1 fw-bold mb-0 center">
-        <img src={logo} alt={"Login image"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
+        <img src={logo} alt={"Logo"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
           Plurality
       </span>
       <h1 className="text-center" style={{marginTop: '30px'}}>Available Credentials</h1>
@@ -76,26 +75,7 @@ export function StoredIdentities() {
       ))}
       </ListGroup>
       </div>
-      <Modal size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      backdrop="static"
-      keyboard={false}
-      show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{modalBody}</Modal.Body>
-        <Modal.Footer>
-          {/*<Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>*/}
-          {/* TODO: Pick button styles from a css file */}
-          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModalBox show={show} modalTitle={modalTitle} modalBody={modalBody} handleClose={handleClose} />
     </div>
   );
 }

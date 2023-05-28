@@ -4,8 +4,7 @@ import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity";
 import "../utils/BigIntUtils";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { ModalBox } from "../components/ModalBox"
 import { sendFullProof } from "../contentScript/contentScript";
 import { Group } from "@semaphore-protocol/group";
 
@@ -122,26 +121,7 @@ export function RequestProofCreation() {
     &nbsp;&nbsp;
     <button className="btn btn-info btn-lg btn-block" type="button" onClick={submitYes} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>Yes</button>
     <iframe src="sandbox.html" id="sandbox" style={{display: "none"}}></iframe>
-    <Modal size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      backdrop="static"
-      keyboard={false}
-      show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{modalBody}</Modal.Body>
-        <Modal.Footer>
-          {/*<Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>*/}
-          {/* TODO: Pick button styles from a css file */}
-          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
+    <ModalBox show={show} modalTitle={modalTitle} modalBody={modalBody} handleClose={handleClose} />
     </div>
   </div>
   );
