@@ -54,17 +54,17 @@ function Home() {
                 <h1 className="fw-bold my-auto">Plurality</h1> 
               </div>
 
-        <div className="d-flex align-items-center justify-content-start h-custom-2 px-5 ms-xl-4 mt-5 pt-xl-0 mt-xl-n5 App">
+        <div className="d-flex align-items-center justify-content-center h-custom-2 px-5 ms-xl-4 mt-5 pt-xl-0 mt-xl-n5 App">
 
-          <Form style={{width: '23rem'}}>
+          <Form className="mt-5" style={{width: '23rem'}}>
 
             <Form.Group controlId="formEmail" className="mb-3 text-start">
-              <Form.Label>Username</Form.Label>
-              <Form.Control type="email" placeholder="Example@email.com" onChange={handleUsernameChange}/>
+              {/*<Form.Label>Username</Form.Label>*/}
+              <Form.Control type="email" placeholder="Username" onChange={handleUsernameChange}/>
             </Form.Group>
 
             <Form.Group controlId="formPassword" className="mb-3 text-start">
-              <Form.Label>Password</Form.Label>
+              {/*<Form.Label>Password</Form.Label>*/}
               <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange}/>
             </Form.Group>
             <Button className="mb-3" variant="secondary" onClick={onSubmit} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF', alignSelf: 'stretch', width: '100%'}}> Login </Button>
