@@ -1,12 +1,12 @@
 import { ListGroup } from "react-bootstrap";
-import "../../styles/App.css";
-import "../../styles/bootstrap.css";
-import logo from '../../images/logo.png';
+import "../styles/App.css";
+import "../styles/bootstrap.css";
+import logo from '../images/logo.png';
 import { useState, useEffect } from "react";
-import { sendIdentityCommitmentFromPopup } from "../../contentScript/contentScript";
+import { sendIdentityCommitmentFromPopup } from "../contentScript/contentScript";
 import { Identity } from "@semaphore-protocol/identity";
-import { ListItem } from "../../components/ListItem"
-import { ModalBox } from "../../components/ModalBox"
+import { ListItem } from "../components/ListItem"
+import { ModalBox } from "../components/ModalBox"
 
 export function StoredIdentities() {
   const [activeName, setActiveName] = useState("");
@@ -64,10 +64,10 @@ export function StoredIdentities() {
   return (
     <div>
       <span className="h1 fw-bold mb-0 center">
-        <img src={logo} alt={"Logo"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
-          Plurality
+        <img src={logo} alt={"Logo"} style={{ width: '20px', height: '24px'}} className="mb-2"/>
+          lurality
       </span>
-      <h1 className="text-center" style={{marginTop: '30px'}}>Available Credentials</h1>
+      <h1 className="text-center" style={{marginTop: '30px'}}>Available Identities</h1>
       <div className="col-12" style={{marginTop: '15px'}}>
       <ListGroup as="ol" className="list-group-numbered">
       {list.map(item => (

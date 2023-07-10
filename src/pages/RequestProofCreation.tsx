@@ -112,8 +112,8 @@ export function RequestProofCreation() {
   return (
   <div>
     <span className="h1 fw-bold mb-0 center">
-      <img src={logo} alt={"Login image"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
-        Plurality
+      <img src={logo} alt={"Logo"} style={{ width: '20px', height: '24px'}} className="mb-2"/>
+        lurality
     </span>
     <div className='center'>
     <p>Do you want to create a zk proof for <b>{proofRequestName}</b>?</p>

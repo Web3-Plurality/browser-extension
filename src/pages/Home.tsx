@@ -50,8 +50,8 @@ function Home() {
         <div className="row">
           <div className="col-sm-6 text-black">
               <div className="my-5 d-flex justify-content-center">
-                <img src={logo} alt={"Plurality"} style={{ width: '30px', height: '35px', marginBottom:'2px'}}/>
-                <h1 className="fw-bold my-auto">Plurality</h1> 
+                <img src={logo} alt={"Plurality"} style={{ width: '22px', height: '26px'}} className="mt-1"/>
+                <h1 className="fw-bold my-auto">lurality</h1> 
               </div>
 
         <div className="d-flex align-items-center justify-content-center h-custom-2 px-5 ms-xl-4 mt-5 pt-xl-0 mt-xl-n5 App">
