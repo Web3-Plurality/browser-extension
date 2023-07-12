@@ -57,8 +57,9 @@ export function StoredIdentities() {
     const item = list.filter(item => item.name === name);
     setActiveName(name);
     const selectedIdentity = new Identity(item[0].storedIdentity);
-    sendIdentityCommitmentFromPopup(JSON.stringify(selectedIdentity.commitment));
-    handleShow("Identity Selected", "Sent selected identity to the browser/dApp","displayItem");
+    //TODO: Create a new page that shows all details of this item
+    //sendIdentityCommitmentFromPopup(JSON.stringify(selectedIdentity.commitment));
+    //handleShow("Identity Selected", "Sent selected identity to the browser/dApp","displayItem");
   }
   
   return (
@@ -67,7 +68,7 @@ export function StoredIdentities() {
         <img src={logo} alt={"Logo"} style={{ width: '20px', height: '24px'}} className="mb-2"/>
           lurality
       </span>
-      <h1 className="text-center" style={{marginTop: '30px'}}>Available Identities</h1>
+      <h3 className="text-center" style={{marginTop: '30px'}}>Available Identities</h3>
       <div className="col-12" style={{marginTop: '15px'}}>
       <ListGroup as="ol" className="list-group-numbered">
       {list.map(item => (
