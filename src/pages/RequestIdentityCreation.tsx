@@ -5,8 +5,7 @@ import logo from '../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity";
 import { useNavigate } from "react-router-dom";
 import "../utils/BigIntUtils";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { ModalBox } from "../components/ModalBox"
 import { sendIdentityCommitmentFromPopup } from "../contentScript/contentScript";
 
 
@@ -39,6 +38,8 @@ function RequestIdentityCreation() {
     setShow(true);
   }
   useEffect(() => {
+    document.body.style.overflow = "hidden";
+
     // get the proof request params for this popup
     const params = new URLSearchParams(window.location.search)
     let proof_request = params.get('proof_request')
@@ -76,36 +77,17 @@ function RequestIdentityCreation() {
     }
   };
   return (
-  <div>
+  <div style={{overflow: 'hidden'}}>
     <span className="h1 fw-bold mb-0 center">
-      <img src={logo} alt={"Login image"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
-        Plurality
+      <img src={logo} alt={"Logo"} style={{ width: '20px', height: '24px'}} className="mb-2"/>
+        lurality
     </span>
     <div className='center'>
     <p>Do you want to create a new identity for <b>{proofRequest}</b>?</p>
     <button className="btn btn-info btn-lg btn-block" type="button" onClick={submitNo} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>No</button>
     &nbsp;&nbsp;
     <button className="btn btn-info btn-lg btn-block" type="button" onClick={submitYes} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>Yes</button>
-    <Modal size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      backdrop="static"
-      keyboard={false}
-      show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{modalBody}</Modal.Body>
-        <Modal.Footer>
-          {/*<Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>*/}
-          {/* TODO: Pick button styles from a css file */}
-          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
+    <ModalBox show={show} modalTitle={modalTitle} modalBody={modalBody} handleClose={handleClose} />
     </div>
   </div>
   );

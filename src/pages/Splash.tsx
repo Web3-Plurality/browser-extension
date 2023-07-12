@@ -24,6 +24,8 @@ function Splash() {
     }
     })
     useEffect(() => {
+      document.body.style.overflow = "hidden";
+
         setTimeout(() => {
           // we need to see from where is this extension being launched and navigate accordingly
           const params = new URLSearchParams(window.location.search)
@@ -46,8 +48,7 @@ function Splash() {
       }, [])
 
   return (
-    /* TODO: Centralize the div on popup */
-  <Container className="d-flex align-items-center justify-content-center text-center">
+    <Container className="d-flex align-items-center justify-content-center text-center" style={{height:"100vh", width:"100%"}}>
         <animated.div style={styles} >
     <Row className="justify-content-md-center">
       <Col><img src={logo} alt={"None"} style={{width: '50px', height: '60px' }} /></Col>
@@ -57,6 +58,7 @@ function Splash() {
     </Row>
     </animated.div>
   </Container>
+
   );
   }
   

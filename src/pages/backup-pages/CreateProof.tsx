@@ -6,8 +6,8 @@ import { useState, useEffect } from "react";
 import { sendFullProof } from "../../contentScript/contentScript";
 import { Group } from "@semaphore-protocol/group";
 import { Identity } from "@semaphore-protocol/identity";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { ListItem } from "../../components/ListItem"
+import { ModalBox } from "../../components/ModalBox"
 
 export function CreateProof() {
   const [activeName, setActiveName] = useState("");
@@ -62,12 +62,12 @@ export function CreateProof() {
       handleShow("Error", "Expecting a proof name from dApp but didn't get any","error")
   }, [])
   
-  const ListItem = ({ name, onClick }: { name:string, onClick: any }) => (
-    <div className={activeName==name ? "active list-group-item" : "list-group-item" }>
-      <span> </span>
-      <p onClick={() => onClick(name)} > {name} </p>
-    </div>
-  );
+  // const ListItem = ({ name, onClick }: { name:string, onClick: any }) => (
+  //   <div className={activeName==name ? "active list-group-item" : "list-group-item" }>
+  //     <span> </span>
+  //     <p onClick={() => onClick(name)} > {name} </p>
+  //   </div>
+  // );
   
   
   const displayItem = async (name:string) => {
@@ -127,33 +127,14 @@ export function CreateProof() {
       </span>
       <div className="col-12" style={{marginTop: '10px'}}>
         <p>Choose the proof generation entry</p>
-      <ListGroup>
+      <ListGroup as="ol" className="list-group-numbered">
       {list.map(item => (
-        <ListItem className="list-group-item"  key={item.name} {...item} onClick={displayItem}/>
+        <ListItem as="li" className="list-group-item"  key={item.name} {...item} activeName={activeName} onClick={displayItem}/>
       ))}
       </ListGroup>
       </div>
       <iframe src="sandbox.html" id="sandbox" style={{display: "none"}}></iframe>
-      <Modal size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      backdrop="static"
-      keyboard={false}
-      show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{modalBody}</Modal.Body>
-        <Modal.Footer>
-          {/*<Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>*/}
-          {/* TODO: Pick button styles from a css file */}
-          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModalBox show={show} modalTitle={modalTitle} modalBody={modalBody} handleClose={handleClose} />
     </div>
   );
 }

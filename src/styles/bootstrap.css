@@ -4857,8 +4857,10 @@ textarea.form-control-lg {
 .list-group-item.active {
   z-index: 2;
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  /*background-color: #0d6efd;
+  border-color: #0d6efd;*/
+  background-color: #de3163;
+  border-color: #de3163;
 }
 .list-group-item + .list-group-item {
   border-top-width: 0;
@@ -6378,6 +6380,10 @@ textarea.form-control-lg {
 
 .shadow-lg {
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.shadow-lg-pink {
+  box-shadow: 0 0.125rem 0.25rem rgba(219, 10, 91, 0.075) !important;
 }
 
 .shadow-none {

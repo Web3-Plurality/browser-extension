@@ -3,8 +3,8 @@ import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom"
 import { useState } from 'react'
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { Button, Form } from 'react-bootstrap';
+import { ModalBox } from "../components/ModalBox"
 
 function Home() {
   const navigate = useNavigate()
@@ -49,33 +49,30 @@ function Home() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-6 text-black">
-              <span className="h1 fw-bold mb-0 center">
-                <img src={logo} alt={"Login image"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
-                  Plurality
-              </span>
+              <div className="my-5 d-flex justify-content-center">
+                <img src={logo} alt={"Plurality"} style={{ width: '22px', height: '26px'}} className="mt-1"/>
+                <h1 className="fw-bold my-auto">lurality</h1> 
+              </div>
 
-        <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5 App">
+        <div className="d-flex align-items-center justify-content-center h-custom-2 px-5 ms-xl-4 mt-5 pt-xl-0 mt-xl-n5 App">
 
-          <form style={{width: '23rem'}}>
+          <Form className="mt-5" style={{width: '23rem'}}>
 
-            <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing: '1px'}}>Log in</h3>
+            <Form.Group controlId="formEmail" className="mb-3 text-start">
+              {/*<Form.Label>Username</Form.Label>*/}
+              <Form.Control type="email" placeholder="Username" onChange={handleUsernameChange}/>
+            </Form.Group>
 
-            <div className="form-outline mb-4">
-              <input type="email" id="form2Example18" className="form-control form-control-lg" placeholder="username" onChange={handleUsernameChange} />
-            </div>
-
-            <div className="form-outline mb-4">
-              <input type="password" id="form2Example28" className="form-control form-control-lg" placeholder='password' onChange={handlePasswordChange}/>
-            </div>
-
-            <div className="form-outline pt-1 mb-4">
-              <button className="btn btn-info btn-lg btn-block" type="button" onClick={onSubmit} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF',alignSelf: 'stretch'}}>Login</button>
-            </div>
+            <Form.Group controlId="formPassword" className="mb-3 text-start">
+              {/*<Form.Label>Password</Form.Label>*/}
+              <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange}/>
+            </Form.Group>
+            <Button className="mb-3" variant="secondary" onClick={onSubmit} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF', alignSelf: 'stretch', width: '100%'}}> Login </Button>
 
             <p className="small mb-5 pb-lg-2"><a className="text-muted" href="#!">Forgot password?</a></p>
             <p>Don't have an account? <a href="#!" className="link-info">Register here</a></p>
 
-          </form>
+          </Form>
 
         </div>
       </div>
@@ -83,26 +80,7 @@ function Home() {
     </div>
   </div>
   </section>
-  <Modal size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      backdrop="static"
-      keyboard={false}
-      show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{modalBody}</Modal.Body>
-        <Modal.Footer>
-          {/*<Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>*/}
-          {/* TODO: Pick button styles from a css file */}
-          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
+  <ModalBox show={show} modalTitle={modalTitle} modalBody={modalBody} handleClose={handleClose} />
   </div>  
   );
 }

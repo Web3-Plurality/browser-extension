@@ -5,8 +5,7 @@ import logo from '../../images/logo.png';
 import { Identity } from "@semaphore-protocol/identity"
 import { useState } from "react";
 import { sendIdentityCommitment } from "../../contentScript/contentScript";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { ModalBox } from "../../components/ModalBox"
 
 export function AddNewIdentity() {
   const [activeId, setActiveId] = useState(0);
@@ -73,7 +72,7 @@ export function AddNewIdentity() {
   return (
     <div>
       <span className="h1 fw-bold mb-0 center">
-        <img src={logo} alt={"Login image"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
+        <img src={logo} alt={"Logo"} style={{ width: '25px', height: '30px', marginBottom:'2px'}}/>
           Plurality
       </span>
       <div className="col-12">
@@ -84,26 +83,7 @@ export function AddNewIdentity() {
       ))}
       </ListGroup>
       </div>
-      <Modal size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      backdrop="static"
-      keyboard={false}
-      show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{modalTitle}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{modalBody}</Modal.Body>
-        <Modal.Footer>
-          {/*<Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>*/}
-          {/* TODO: Pick button styles from a css file */}
-          <Button variant="primary" onClick={handleClose} style={{backgroundColor:'#DE3163', borderColor: '#DE3163', color:'#FFFFFF'}}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModalBox show={show} modalTitle={modalTitle} modalBody={modalBody} handleClose={handleClose} />
     </div>
   );
 }
