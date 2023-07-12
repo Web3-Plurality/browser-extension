@@ -12,10 +12,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     chrome.windows.create({
       url: chrome.runtime.getURL("index.html?nav=requestidentitycreation&proof_request="+data.proof_request),
       type: "popup",
-      top: data.top,
+      top: data.top+75,
       left: data.left-400,
-      width: 400,
-      height: 600,
+      width: 340,
+      height: 480
     });
    }
     // this script will create a new popup for creation of proof
@@ -25,10 +25,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     chrome.windows.create({
       url: chrome.runtime.getURL("index.html?nav=requestproofcreation&proof_request="+JSON.stringify(data.proof_request)),
       type: "popup",
-      top: data.top,
+      top: data.top+75,
       left: data.left-400,
-      width: 400,
-      height: 600,
+      width: 340,
+      height: 480
     });
   }
   sendResponse();

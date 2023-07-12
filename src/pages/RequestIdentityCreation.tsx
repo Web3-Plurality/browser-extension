@@ -38,6 +38,8 @@ function RequestIdentityCreation() {
     setShow(true);
   }
   useEffect(() => {
+    document.body.style.overflow = "hidden";
+
     // get the proof request params for this popup
     const params = new URLSearchParams(window.location.search)
     let proof_request = params.get('proof_request')
@@ -75,7 +77,7 @@ function RequestIdentityCreation() {
     }
   };
   return (
-  <div>
+  <div style={{overflow: 'hidden'}}>
     <span className="h1 fw-bold mb-0 center">
       <img src={logo} alt={"Logo"} style={{ width: '20px', height: '24px'}} className="mb-2"/>
         lurality

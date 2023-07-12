@@ -24,6 +24,8 @@ function Splash() {
     }
     })
     useEffect(() => {
+      document.body.style.overflow = "hidden";
+
         setTimeout(() => {
           // we need to see from where is this extension being launched and navigate accordingly
           const params = new URLSearchParams(window.location.search)

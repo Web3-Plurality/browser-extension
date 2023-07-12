@@ -33,6 +33,8 @@ export function RequestProofCreation() {
     setShow(true);
   }
   useEffect(() => {
+    document.body.style.overflow = "hidden";
+
     // get the proof request params for this popup
     const params = new URLSearchParams(window.location.search)
     let proof_request:any = params.get('proof_request')

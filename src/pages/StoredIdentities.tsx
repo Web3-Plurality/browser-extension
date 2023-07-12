@@ -3,7 +3,6 @@ import "../styles/App.css";
 import "../styles/bootstrap.css";
 import logo from '../images/logo.png';
 import { useState, useEffect } from "react";
-import { sendIdentityCommitmentFromPopup } from "../contentScript/contentScript";
 import { Identity } from "@semaphore-protocol/identity";
 import { ListItem } from "../components/ListItem"
 import { ModalBox } from "../components/ModalBox"
@@ -45,21 +44,16 @@ export function StoredIdentities() {
     setModalBody(body);
     setShow(true);
   }
-
-  // const ListItem = ({ name, onClick }: { name:string, onClick: any }) => (
-  //   <div className={activeName==name ? "active list-group-item" : "list-group-item" }>
-  //     <span> </span>
-  //     <p onClick={() => onClick(name)} > {name} </p>
-  //   </div>
-  // );
   
   const displayItem = (name:string) => {
     const item = list.filter(item => item.name === name);
     setActiveName(name);
     const selectedIdentity = new Identity(item[0].storedIdentity);
+    const message = "Commitment: "+ selectedIdentity.getCommitment().toString() + "\n" +
+                    "Trapdoor: "+ selectedIdentity.getTrapdoor().toString() + "\n" + 
+                    "Nullifier: "+selectedIdentity.getNullifier().toString();
+    handleShow("Identity Details",message,"displayItem");
     //TODO: Create a new page that shows all details of this item
-    //sendIdentityCommitmentFromPopup(JSON.stringify(selectedIdentity.commitment));
-    //handleShow("Identity Selected", "Sent selected identity to the browser/dApp","displayItem");
   }
   
   return (
